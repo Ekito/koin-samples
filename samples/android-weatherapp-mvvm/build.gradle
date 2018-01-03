@@ -1,0 +1,25 @@
+apply from: "../../common.gradle"
+apply from: "../../common-android.gradle"
+
+buildscript {
+    apply from: "../../common.gradle"
+    apply from: "../../common-android.gradle"
+
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$androidGradlePlugin"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        jcenter()
+        google()
+    }
+}
+
