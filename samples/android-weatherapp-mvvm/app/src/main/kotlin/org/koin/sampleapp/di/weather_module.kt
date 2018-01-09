@@ -10,11 +10,11 @@ import org.koin.sampleapp.view.weather.WeatherResultViewModel
 
 val weatherModule = applicationContext {
 
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { MainViewModel(get()) }
 
-    viewModel { WeatherResultViewModel(get(), get()) }
+    viewModel { WeatherResultViewModel(get()) }
 
-    viewModel { WeatherDetailViewModel(get(), get()) }
+    viewModel { WeatherDetailViewModel(get()) }
 
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
 }

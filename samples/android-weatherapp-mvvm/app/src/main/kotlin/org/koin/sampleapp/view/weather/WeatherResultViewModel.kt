@@ -2,47 +2,45 @@ package org.koin.sampleapp.view.weather
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import io.reactivex.disposables.CompositeDisposable
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.async
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.repository.json.getDailyForecasts
-import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.util.rx.with
 
 /**
  * Weather Presenter
  */
-class WeatherResultViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : ViewModel() {
+class WeatherResultViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
     val currentSearch = MutableLiveData<WeatherResultUIModel>()
-    private val disposables = CompositeDisposable()
-    private lateinit var cacheList: List<DailyForecastModel>
+    var jobs = listOf<Job>()
 
     init {
         getWeatherList()
     }
 
-    fun getWeatherList() {
-        disposables.add(weatherRepository.getWeather().map { it.getDailyForecasts() }.with(scheduler)
-                .subscribe
-                ({ list ->
-                    currentSearch.value = WeatherResultUIModel(list)
-                    cacheList = list
-                }, { e ->
-                    currentSearch.value = WeatherResultUIModel(error = e)
-                })
-        )
+    fun getWeatherList() = async {
+        try {
+            weatherRepository.getWeather().let {
+                jobs += it
+                currentSearch.value = WeatherResultUIModel(it.await())
+            }
+        } catch (e: Exception) {
+            currentSearch.value = WeatherResultUIModel(error = e)
+        }
     }
 
-    fun selectWeatherDetail(detail: DailyForecastModel) {
-        disposables.add(weatherRepository.selectWeatherDetail(detail).with(scheduler).subscribe {
-            currentSearch.value = WeatherResultUIModel(emptyList(), true)
-            currentSearch.value = WeatherResultUIModel(cacheList)
-        })
+    fun selectWeatherDetail(detail: DailyForecastModel) = async {
+        weatherRepository.selectWeatherDetail(detail).let {
+            jobs += it
+            it.await()
+            currentSearch.value = WeatherResultUIModel(selected = true)
+            currentSearch.value = WeatherResultUIModel(selected = false)
+        }
     }
 
     override fun onCleared() {
-        disposables.clear()
+        jobs.forEach { it.cancel() }
     }
 }
 

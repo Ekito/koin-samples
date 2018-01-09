@@ -2,33 +2,32 @@ package org.koin.sampleapp.view.main
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.experimental.CommonPool
+import kotlinx.coroutines.experimental.Job
+import kotlinx.coroutines.experimental.async
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.util.rx.with
 
-class MainViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : ViewModel() {
+class MainViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
 
-    private var disposable: Disposable? = null
     val weatherSearch = MutableLiveData<MainUIModel>()
+    var jobs = listOf<Job>()
 
-    fun searchWeather(address: String) {
+    fun searchWeather(address: String) = async {
         weatherSearch.value = MainUIModel(address, true)
-        disposable = weatherRepository.searchWeather(address)
-                .with(scheduler)
-                .subscribe(
-                        {
-                            weatherSearch.value = MainUIModel(address, false, true)
-                            weatherSearch.value = MainUIModel(address)
-                        },
-                        { err ->
-                            weatherSearch.value = MainUIModel(address, error = err)
-                        })
+        try {
+            weatherRepository.searchWeather(address).let {
+                jobs += it
+                it.await()
+                weatherSearch.value = MainUIModel(address, false, true)
+                weatherSearch.value = MainUIModel(address)
+            }
+        } catch (e: Exception) {
+            weatherSearch.value = MainUIModel(address, error = e)
+        }
     }
 
     override fun onCleared() {
-        disposable?.dispose()
-        disposable = null
+        jobs.forEach { it.cancel() }
     }
 }
 
