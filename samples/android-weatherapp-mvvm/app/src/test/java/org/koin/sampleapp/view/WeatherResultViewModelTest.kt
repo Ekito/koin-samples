@@ -19,7 +19,7 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class WeatherResultPresenterTest : KoinTest {
+class WeatherResultViewModelTest : KoinTest {
 
     val viewModel: WeatherResultViewModel by inject()
     val repository: WeatherRepository by inject()
