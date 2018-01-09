@@ -2,11 +2,12 @@ package org.koin.sampleapp.view
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sampleapp.di.testRemoteDatasource
+import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.view.weather.WeatherResultUIModel
 import org.koin.sampleapp.view.weather.WeatherResultViewModel
@@ -31,7 +32,7 @@ class WeatherResultPresenterTest : KoinTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testRemoteDatasource)
+        startKoin(testLocalDatasource)
     }
 
     @After
@@ -40,8 +41,8 @@ class WeatherResultPresenterTest : KoinTest {
     }
 
     @Test
-    fun testGotList() {
-        repository.searchWeather("test").blockingGet()
+    fun testGotList() = runBlocking {
+        repository.searchWeather("test").join()
 
         viewModel.currentSearch.observeForever(observer)
 
@@ -51,16 +52,18 @@ class WeatherResultPresenterTest : KoinTest {
     }
 
     @Test
-    fun testSelected() {
-        repository.searchWeather("test").blockingGet()
-
+    fun testSelected() = runBlocking {
         viewModel.currentSearch.observeForever(observer)
+
+        repository.searchWeather("test").join()
+
+        viewModel.getWeatherList().join()
+
         val value = viewModel.currentSearch.value ?: error("No value for view model")
         Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
 
         val detail = value.list.first()
-        viewModel.selectWeatherDetail(detail)
-
+        viewModel.selectWeatherDetail(detail).join()
         Mockito.verify(observer).onChanged(WeatherResultUIModel(selected = true))
     }
 

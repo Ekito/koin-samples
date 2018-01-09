@@ -2,10 +2,12 @@ package org.koin.sampleapp.view
 
 import android.arch.core.executor.testing.InstantTaskExecutorRule
 import android.arch.lifecycle.Observer
+import kotlinx.coroutines.experimental.runBlocking
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.di.testRemoteDatasource
 import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
@@ -24,13 +26,14 @@ class MainViewModelTest : KoinTest {
     val mainViewModel: MainViewModel by inject()
 
     @Mock lateinit var observer: Observer<MainUIModel>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testRemoteDatasource)
+        startKoin(testLocalDatasource)
     }
 
     @After
@@ -39,10 +42,10 @@ class MainViewModelTest : KoinTest {
     }
 
     @Test
-    fun testGetWeather() {
+    fun testGetWeather() = runBlocking {
         mainViewModel.weatherSearch.observeForever(observer)
 
-        mainViewModel.searchWeather(locationString)
+        mainViewModel.searchWeather(locationString).join()
 
         verify(observer).onChanged(MainUIModel(locationString, true))
         verify(observer).onChanged(MainUIModel(locationString, false))

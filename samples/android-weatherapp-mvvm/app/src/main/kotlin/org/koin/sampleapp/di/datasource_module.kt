@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-val RemoteDataSourceModule = applicationContext {
+val remoteDataSourceModule = applicationContext {
     // provided web components
     bean { createOkHttpClient() }
 

@@ -5,7 +5,7 @@ import org.koin.sampleapp.datasource.JavaReader
 import org.koin.sampleapp.repository.WeatherDatasource
 import org.koin.sampleapp.repository.local.LocalDataSource
 import org.koin.sampleapp.util.TestSchedulerProvider
-import org.koin.sampleapp.util.rx.SchedulerProvider
+import org.koin.sampleapp.util.coroutines.SchedulerProvider
 
 
 val testDatasourceModule = applicationContext {
@@ -17,5 +17,5 @@ val RXTestModule = applicationContext {
     provide { TestSchedulerProvider() as SchedulerProvider }
 }
 
-val testRemoteDatasource = weatherAppModules + RXTestModule //listOf(RXTestModule, weatherModule, RemoteDataSourceModule)
+val testRemoteDatasource = weatherAppModules + RXTestModule //listOf(RXTestModule, weatherModule, remoteDataSourceModule)
 val testLocalDatasource = weatherAppModules + RXTestModule + testDatasourceModule //listOf(RXTestModule, weatherModule, testDatasourceModule)

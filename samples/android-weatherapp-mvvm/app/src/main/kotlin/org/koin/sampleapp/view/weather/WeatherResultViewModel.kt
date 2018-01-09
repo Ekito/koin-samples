@@ -3,14 +3,15 @@ package org.koin.sampleapp.view.weather
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.experimental.launch
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
+import org.koin.sampleapp.util.coroutines.SchedulerProvider
 
 /**
  * Weather Presenter
  */
-class WeatherResultViewModel(private val weatherRepository: WeatherRepository) : ViewModel() {
+class WeatherResultViewModel(private val weatherRepository: WeatherRepository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
 
     val currentSearch = MutableLiveData<WeatherResultUIModel>()
     var jobs = listOf<Job>()
@@ -19,7 +20,7 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository) :
         getWeatherList()
     }
 
-    fun getWeatherList() = async {
+    fun getWeatherList() = launch(schedulerProvider.ui()) {
         try {
             weatherRepository.getWeather().let {
                 jobs += it
@@ -30,12 +31,14 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository) :
         }
     }
 
-    fun selectWeatherDetail(detail: DailyForecastModel) = async {
+    fun selectWeatherDetail(detail: DailyForecastModel) = launch(schedulerProvider.ui()) {
         weatherRepository.selectWeatherDetail(detail).let {
             jobs += it
             it.await()
             currentSearch.value = WeatherResultUIModel(selected = true)
-            currentSearch.value = WeatherResultUIModel(selected = false)
+            val weather = weatherRepository.getWeather()
+            jobs += weather
+            currentSearch.value = WeatherResultUIModel(weather.await(), selected = false)
         }
     }
 

@@ -1,12 +1,10 @@
 package org.koin.sampleapp.util
 
-import io.reactivex.schedulers.Schedulers
-import org.koin.sampleapp.util.rx.SchedulerProvider
+import kotlinx.coroutines.experimental.CommonPool
+import org.koin.sampleapp.util.coroutines.SchedulerProvider
 
 class TestSchedulerProvider : SchedulerProvider {
-    override fun io() = Schedulers.trampoline()
+    override fun ui() = CommonPool
 
-    override fun ui() = Schedulers.trampoline()
-
-    override fun computation() = Schedulers.trampoline()
+    override fun background() = CommonPool
 }
