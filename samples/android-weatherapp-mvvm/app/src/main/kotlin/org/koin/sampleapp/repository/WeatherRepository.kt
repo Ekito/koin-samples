@@ -28,8 +28,8 @@ class WeatherRepositoryImpl(private val weatherDatasource: WeatherDatasource) : 
 
     private val DEFAULT_LANG = "EN"
 
-    override fun selectWeatherDetail(detail: DailyForecastModel) = async {
-        this@WeatherRepositoryImpl.detail = detail
+    override fun selectWeatherDetail(newDetail: DailyForecastModel) = async {
+        detail = newDetail
     }
 
     override fun getSelectedWeatherDetail(): Deferred<DailyForecastModel> = async {
