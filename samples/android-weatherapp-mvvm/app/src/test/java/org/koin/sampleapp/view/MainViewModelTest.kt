@@ -6,7 +6,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sampleapp.di.testRemoteDatasource
+import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -30,7 +30,7 @@ class MainViewModelTest : KoinTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testRemoteDatasource)
+        startKoin(testLocalDatasource)
     }
 
     @After
