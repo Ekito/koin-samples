@@ -7,8 +7,8 @@ import kotlinx.coroutines.experimental.runBlocking
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.koin.sampleapp.coroutines.TestSchedulerProvider
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.util.TestSchedulerProvider
 import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
 import org.mockito.ArgumentMatchers

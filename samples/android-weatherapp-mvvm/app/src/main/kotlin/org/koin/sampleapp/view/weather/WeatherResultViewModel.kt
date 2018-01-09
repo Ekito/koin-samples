@@ -20,8 +20,8 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository, s
     fun getWeatherList() {
         launch {
             try {
-                val list = weatherRepository.getWeather()
-                currentSearch.value = WeatherResultUIModel(list.await())
+                // weather list
+                currentSearch.value = WeatherResultUIModel(weatherRepository.getWeather().await())
             } catch (e: Exception) {
                 currentSearch.value = WeatherResultUIModel(error = e)
             }
@@ -30,10 +30,11 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository, s
 
     fun selectWeatherDetail(detail: DailyForecastModel) {
         launch {
+            // select detail
             weatherRepository.selectWeatherDetail(detail).await()
             currentSearch.value = WeatherResultUIModel(selected = true)
-            val weather = weatherRepository.getWeather()
-            currentSearch.value = WeatherResultUIModel(weather.await(), selected = false)
+            // default state
+            currentSearch.value = WeatherResultUIModel(weatherRepository.getWeather().await(), selected = false)
         }
     }
 }

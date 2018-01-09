@@ -12,7 +12,7 @@ import org.koin.sampleapp.repository.json.getLocation
 interface WeatherRepository {
     fun searchWeather(location: String): Deferred<Unit>
     fun getWeather(): Deferred<List<DailyForecastModel>>
-    fun selectWeatherDetail(detail: DailyForecastModel): Deferred<Unit>
+    fun selectWeatherDetail(newDetail: DailyForecastModel): Deferred<Unit>
     fun getSelectedWeatherDetail(): Deferred<DailyForecastModel>
 }
 

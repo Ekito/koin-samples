@@ -12,9 +12,12 @@ class MainViewModel(private val weatherRepository: WeatherRepository, schedulerP
     fun searchWeather(address: String) {
         launch {
             try {
+                // make loading
                 weatherSearch.value = MainUIModel(address, true)
                 weatherRepository.searchWeather(address).await()
+                // load ok
                 weatherSearch.value = MainUIModel(address, false, true)
+                // default state
                 weatherSearch.value = MainUIModel(address)
             } catch (e: Exception) {
                 weatherSearch.value = MainUIModel(address, error = e)
