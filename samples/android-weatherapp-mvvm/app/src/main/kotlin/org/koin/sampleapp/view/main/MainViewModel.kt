@@ -1,33 +1,25 @@
 package org.koin.sampleapp.view.main
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.coroutines.SchedulerProvider
+import org.koin.sampleapp.view.AbstractViewModel
 
-class MainViewModel(private val weatherRepository: WeatherRepository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
+class MainViewModel(private val weatherRepository: WeatherRepository, schedulerProvider: SchedulerProvider) : AbstractViewModel(schedulerProvider) {
 
     val weatherSearch = MutableLiveData<MainUIModel>()
-    var jobs = listOf<Job>()
 
-    fun searchWeather(address: String) = launch(schedulerProvider.ui()) {
-        weatherSearch.value = MainUIModel(address, true)
-        try {
-            weatherRepository.searchWeather(address).let {
-                jobs += it
-                it.await()
+    fun searchWeather(address: String) {
+        launch {
+            try {
+                weatherSearch.value = MainUIModel(address, true)
+                weatherRepository.searchWeather(address).await()
                 weatherSearch.value = MainUIModel(address, false, true)
                 weatherSearch.value = MainUIModel(address)
+            } catch (e: Exception) {
+                weatherSearch.value = MainUIModel(address, error = e)
             }
-        } catch (e: Exception) {
-            weatherSearch.value = MainUIModel(address, error = e)
         }
-    }
-
-    override fun onCleared() {
-        jobs.forEach { it.cancel() }
     }
 }
 

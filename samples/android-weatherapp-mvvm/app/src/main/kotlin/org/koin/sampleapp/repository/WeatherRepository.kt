@@ -22,11 +22,9 @@ interface WeatherRepository {
  */
 class WeatherRepositoryImpl(private val weatherDatasource: WeatherDatasource) : WeatherRepository {
 
-    var weatherCache: Pair<String, List<DailyForecastModel>>? = null
-
+    private var weatherCache: Pair<String, List<DailyForecastModel>>? = null
     private var detail: DailyForecastModel? = null
-
-    private val DEFAULT_LANG = "EN"
+    private val defaultLang = "EN"
 
     override fun selectWeatherDetail(newDetail: DailyForecastModel) = async {
         detail = newDetail
@@ -38,7 +36,7 @@ class WeatherRepositoryImpl(private val weatherDatasource: WeatherDatasource) : 
 
     override fun searchWeather(location: String): Deferred<Unit> = async {
         val geo = weatherDatasource.geocode(location).await().getLocation() ?: error("Geocode is null")
-        val weather = weatherDatasource.weather(geo.lat, geo.lng, DEFAULT_LANG).await()
+        val weather = weatherDatasource.weather(geo.lat, geo.lng, defaultLang).await()
         weatherCache = Pair(location, weather.getDailyForecasts())
     }
 

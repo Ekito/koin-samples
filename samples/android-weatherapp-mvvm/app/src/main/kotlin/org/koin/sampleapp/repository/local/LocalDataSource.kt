@@ -7,9 +7,9 @@ import org.koin.sampleapp.repository.json.geocode.Geocode
 import org.koin.sampleapp.repository.json.geocode.Location
 import org.koin.sampleapp.repository.json.weather.Weather
 
-class LocalDataSource(val jsonReader: JsonReader) : WeatherDatasource {
+class LocalDataSource(private val jsonReader: JsonReader) : WeatherDatasource {
     private val cities = HashMap<Location, String>()
-    private val default_city = "toulouse"
+    private val defaultCity = "toulouse"
 
     init {
         cities += jsonReader.getAllLocations()
@@ -31,7 +31,7 @@ class LocalDataSource(val jsonReader: JsonReader) : WeatherDatasource {
         if (isKnownCity(adrs)) {
             jsonReader.getGeocode(adrs)
         } else {
-            jsonReader.getGeocode(default_city)
+            jsonReader.getGeocode(defaultCity)
         }
     }
 

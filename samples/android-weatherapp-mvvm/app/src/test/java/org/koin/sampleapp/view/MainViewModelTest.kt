@@ -8,7 +8,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.di.testLocalDatasource
-import org.koin.sampleapp.di.testRemoteDatasource
 import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -45,7 +44,8 @@ class MainViewModelTest : KoinTest {
     fun testGetWeather() = runBlocking {
         mainViewModel.weatherSearch.observeForever(observer)
 
-        mainViewModel.searchWeather(locationString).join()
+        mainViewModel.searchWeather(locationString)
+        mainViewModel.jobs.forEach { it.join() }
 
         verify(observer).onChanged(MainUIModel(locationString, true))
         verify(observer).onChanged(MainUIModel(locationString, false))

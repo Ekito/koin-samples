@@ -1,49 +1,40 @@
 package org.koin.sampleapp.view.weather
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.launch
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.coroutines.SchedulerProvider
+import org.koin.sampleapp.view.AbstractViewModel
 
 /**
  * Weather Presenter
  */
-class WeatherResultViewModel(private val weatherRepository: WeatherRepository, private val schedulerProvider: SchedulerProvider) : ViewModel() {
+class WeatherResultViewModel(private val weatherRepository: WeatherRepository, schedulerProvider: SchedulerProvider) : AbstractViewModel(schedulerProvider) {
 
     val currentSearch = MutableLiveData<WeatherResultUIModel>()
-    var jobs = listOf<Job>()
 
     init {
         getWeatherList()
     }
 
-    fun getWeatherList() = launch(schedulerProvider.ui()) {
-        try {
-            weatherRepository.getWeather().let {
-                jobs += it
-                currentSearch.value = WeatherResultUIModel(it.await())
+    fun getWeatherList() {
+        launch {
+            try {
+                val list = weatherRepository.getWeather()
+                currentSearch.value = WeatherResultUIModel(list.await())
+            } catch (e: Exception) {
+                currentSearch.value = WeatherResultUIModel(error = e)
             }
-        } catch (e: Exception) {
-            currentSearch.value = WeatherResultUIModel(error = e)
         }
     }
 
-    fun selectWeatherDetail(detail: DailyForecastModel) = launch(schedulerProvider.ui()) {
-        weatherRepository.selectWeatherDetail(detail).let {
-            jobs += it
-            it.await()
+    fun selectWeatherDetail(detail: DailyForecastModel) {
+        launch {
+            weatherRepository.selectWeatherDetail(detail).await()
             currentSearch.value = WeatherResultUIModel(selected = true)
             val weather = weatherRepository.getWeather()
-            jobs += weather
             currentSearch.value = WeatherResultUIModel(weather.await(), selected = false)
         }
-    }
-
-    override fun onCleared() {
-        jobs.forEach { it.cancel() }
     }
 }
 

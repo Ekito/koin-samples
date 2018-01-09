@@ -42,7 +42,8 @@ class MainViewModelMockTest {
 
         mainViewModel.weatherSearch.observeForever(observer)
 
-        mainViewModel.searchWeather(locationString).join()
+        mainViewModel.searchWeather(locationString)
+        mainViewModel.jobs.forEach { it.join() }
 
         Mockito.verify(observer).onChanged(MainUIModel(locationString, true))
         Mockito.verify(observer).onChanged(MainUIModel(locationString, false))
@@ -55,7 +56,8 @@ class MainViewModelMockTest {
 
         mainViewModel.weatherSearch.observeForever(observer)
 
-        mainViewModel.searchWeather(locationString).join()
+        mainViewModel.searchWeather(locationString)
+        mainViewModel.jobs.forEach { it.join() }
 
         Mockito.verify(observer).onChanged(MainUIModel(locationString, true))
         Mockito.verify(observer).onChanged(MainUIModel(locationString, error = error))

@@ -45,6 +45,7 @@ class WeatherResultPresenterTest : KoinTest {
         repository.searchWeather("test").join()
 
         viewModel.currentSearch.observeForever(observer)
+        viewModel.jobs.forEach { it.join() }
 
         val value = viewModel.currentSearch.value ?: error("No value for view model")
 
@@ -57,13 +58,15 @@ class WeatherResultPresenterTest : KoinTest {
 
         repository.searchWeather("test").join()
 
-        viewModel.getWeatherList().join()
+        viewModel.getWeatherList()
+        viewModel.jobs.forEach { it.join() }
 
         val value = viewModel.currentSearch.value ?: error("No value for view model")
         Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
 
         val detail = value.list.first()
-        viewModel.selectWeatherDetail(detail).join()
+        viewModel.selectWeatherDetail(detail)
+        viewModel.jobs.forEach { it.join() }
         Mockito.verify(observer).onChanged(WeatherResultUIModel(selected = true))
     }
 
