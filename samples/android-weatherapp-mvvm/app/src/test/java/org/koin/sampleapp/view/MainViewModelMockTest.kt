@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.coroutines.TestSchedulerProvider
 import org.koin.sampleapp.repository.WeatherRepository
+import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
 import org.koin.sampleapp.view.main.SearchEvent
 import org.mockito.ArgumentMatchers
@@ -26,7 +27,9 @@ class MainViewModelMockTest {
     val schedulerProvider = TestSchedulerProvider()
 
     @Mock lateinit var repository: WeatherRepository
-    @Mock lateinit var observer: Observer<SearchEvent>
+    @Mock lateinit var searchObserver: Observer<SearchEvent>
+    @Mock lateinit var uiObserver: Observer<MainUIModel>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -40,13 +43,16 @@ class MainViewModelMockTest {
     fun testGetWeather() = runBlocking {
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(async(schedulerProvider.ui()) {})
 
-        mainViewModel.searchEvent.observeForever(observer)
+        mainViewModel.searchEvent.observeForever(searchObserver)
+        mainViewModel.uiData.observeForever(uiObserver)
+
 
         mainViewModel.searchWeather(locationString)
         mainViewModel.jobs.forEach { it.join() }
 
-        Mockito.verify(observer).onChanged(SearchEvent(isLoading = true))
-        Mockito.verify(observer).onChanged(SearchEvent(isSuccess = true))
+        Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
+        Mockito.verify(searchObserver).onChanged(SearchEvent(isSuccess = true))
+        Mockito.verify(uiObserver).onChanged(MainUIModel(locationString))
     }
 
     @Test
@@ -54,12 +60,13 @@ class MainViewModelMockTest {
         val error = IllegalStateException("error !")
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(async(schedulerProvider.ui()) { throw error })
 
-        mainViewModel.searchEvent.observeForever(observer)
+        mainViewModel.searchEvent.observeForever(searchObserver)
+        mainViewModel.uiData.observeForever(uiObserver)
 
         mainViewModel.searchWeather(locationString)
         mainViewModel.jobs.forEach { it.join() }
 
-        Mockito.verify(observer).onChanged(SearchEvent(isLoading = true))
-        Mockito.verify(observer).onChanged(SearchEvent(error = error))
+        Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
+        Mockito.verify(uiObserver).onChanged(MainUIModel(locationString))
     }
 }

@@ -20,9 +20,7 @@ import java.util.*
  */
 class WeatherResultActivity : AppCompatActivity() {
 
-    // Get address
     private val address by property<String>(PROPERTY_ADDRESS)
-    // get Last date
     private val now by property<Date>(PROPERTY_WEATHER_DATE)
 
     private lateinit var weatherResultAdapter: WeatherResultAdapter
