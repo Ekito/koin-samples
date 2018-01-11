@@ -9,6 +9,7 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.repository.WeatherRepository
+import org.koin.sampleapp.view.weather.SelectEvent
 import org.koin.sampleapp.view.weather.WeatherResultUIModel
 import org.koin.sampleapp.view.weather.WeatherResultViewModel
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -24,8 +25,9 @@ class WeatherResultViewModelTest : KoinTest {
     val viewModel: WeatherResultViewModel by inject()
     val repository: WeatherRepository by inject()
 
+    @Mock lateinit var listObserver: Observer<WeatherResultUIModel>
+    @Mock lateinit var selectObserver: Observer<SelectEvent>
 
-    @Mock lateinit var observer: Observer<WeatherResultUIModel>
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -44,30 +46,32 @@ class WeatherResultViewModelTest : KoinTest {
     fun testGotList() = runBlocking {
         repository.searchWeather("test").join()
 
-        viewModel.currentSearch.observeForever(observer)
+        viewModel.weatherList.observeForever(listObserver)
         viewModel.jobs.forEach { it.join() }
 
-        val value = viewModel.currentSearch.value ?: error("No value for view model")
+        val value = viewModel.weatherList.value ?: error("No value for view model")
 
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
+        Mockito.verify(listObserver).onChanged(WeatherResultUIModel(value.list))
     }
 
     @Test
     fun testSelected() = runBlocking {
-        viewModel.currentSearch.observeForever(observer)
+        viewModel.weatherList.observeForever(listObserver)
+        viewModel.selectEvent.observeForever(selectObserver)
 
         repository.searchWeather("test").join()
 
         viewModel.getWeatherList()
         viewModel.jobs.forEach { it.join() }
 
-        val value = viewModel.currentSearch.value ?: error("No value for view model")
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
+        val value = viewModel.weatherList.value ?: error("No value for view model")
+        Mockito.verify(listObserver).onChanged(WeatherResultUIModel(value.list))
 
         val detail = value.list.first()
         viewModel.selectWeatherDetail(detail)
         viewModel.jobs.forEach { it.join() }
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(selected = true))
+
+        Mockito.verify(selectObserver).onChanged(SelectEvent(isSelected = true))
     }
 
 }

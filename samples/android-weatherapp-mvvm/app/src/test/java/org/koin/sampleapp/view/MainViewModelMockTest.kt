@@ -9,8 +9,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.coroutines.TestSchedulerProvider
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
+import org.koin.sampleapp.view.main.SearchEvent
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -26,7 +26,7 @@ class MainViewModelMockTest {
     val schedulerProvider = TestSchedulerProvider()
 
     @Mock lateinit var repository: WeatherRepository
-    @Mock lateinit var observer: Observer<MainUIModel>
+    @Mock lateinit var observer: Observer<SearchEvent>
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -40,13 +40,13 @@ class MainViewModelMockTest {
     fun testGetWeather() = runBlocking {
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(async(schedulerProvider.ui()) {})
 
-        mainViewModel.weatherSearch.observeForever(observer)
+        mainViewModel.searchEvent.observeForever(observer)
 
         mainViewModel.searchWeather(locationString)
         mainViewModel.jobs.forEach { it.join() }
 
-        Mockito.verify(observer).onChanged(MainUIModel(locationString, true))
-        Mockito.verify(observer).onChanged(MainUIModel(locationString, false))
+        Mockito.verify(observer).onChanged(SearchEvent(isLoading = true))
+        Mockito.verify(observer).onChanged(SearchEvent(isSuccess = true))
     }
 
     @Test
@@ -54,12 +54,12 @@ class MainViewModelMockTest {
         val error = IllegalStateException("error !")
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(async(schedulerProvider.ui()) { throw error })
 
-        mainViewModel.weatherSearch.observeForever(observer)
+        mainViewModel.searchEvent.observeForever(observer)
 
         mainViewModel.searchWeather(locationString)
         mainViewModel.jobs.forEach { it.join() }
 
-        Mockito.verify(observer).onChanged(MainUIModel(locationString, true))
-        Mockito.verify(observer).onChanged(MainUIModel(locationString, error = error))
+        Mockito.verify(observer).onChanged(SearchEvent(isLoading = true))
+        Mockito.verify(observer).onChanged(SearchEvent(error = error))
     }
 }

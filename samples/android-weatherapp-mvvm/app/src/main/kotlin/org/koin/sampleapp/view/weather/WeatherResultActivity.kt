@@ -34,12 +34,19 @@ class WeatherResultActivity : AppCompatActivity() {
         weatherTitle.text = getString(R.string.weather_title).format(address, now)
 
         val model = getViewModel<WeatherResultViewModel>()
-        model.currentSearch.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
+        model.weatherList.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
             if (it != null) {
                 val weatherList = it.list
                 if (weatherList != weatherResultAdapter.list && weatherList.isNotEmpty()) {
                     displayWeather(weatherList)
-                } else if (it.selected) {
+                } else if (it.error != null) {
+                    displayError(it.error)
+                }
+            }
+        })
+        model.selectEvent.observe(this, android.arch.lifecycle.Observer {
+            if (it != null) {
+                if (it.isSelected) {
                     onDetailSaved()
                 } else if (it.error != null) {
                     displayError(it.error)

@@ -5,13 +5,15 @@ import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.coroutines.SchedulerProvider
 import org.koin.sampleapp.view.AbstractViewModel
+import org.koin.sampleapp.view.SingleLiveEvent
 
 /**
  * Weather Presenter
  */
 class WeatherResultViewModel(private val weatherRepository: WeatherRepository, schedulerProvider: SchedulerProvider) : AbstractViewModel(schedulerProvider) {
 
-    val currentSearch = MutableLiveData<WeatherResultUIModel>()
+    val weatherList = MutableLiveData<WeatherResultUIModel>()
+    val selectEvent = SingleLiveEvent<SelectEvent>()
 
     init {
         getWeatherList()
@@ -21,9 +23,9 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository, s
         launch {
             try {
                 // weather list
-                currentSearch.value = WeatherResultUIModel(weatherRepository.getWeather().await())
+                weatherList.value = WeatherResultUIModel(weatherRepository.getWeather().await())
             } catch (e: Exception) {
-                currentSearch.value = WeatherResultUIModel(error = e)
+                weatherList.value = WeatherResultUIModel(error = e)
             }
         }
     }
@@ -32,12 +34,11 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository, s
         launch {
             // select detail
             weatherRepository.selectWeatherDetail(detail).await()
-            currentSearch.value = WeatherResultUIModel(selected = true)
-            // default state
-            currentSearch.value = WeatherResultUIModel(weatherRepository.getWeather().await(), selected = false)
+            selectEvent.postValue(SelectEvent(isSelected = true))
         }
     }
 }
 
 
-data class WeatherResultUIModel(val list: List<DailyForecastModel> = emptyList(), val selected: Boolean = false, val error: Throwable? = null)
+data class WeatherResultUIModel(val list: List<DailyForecastModel> = emptyList(), val error: Throwable? = null)
+data class SelectEvent(val isSelected: Boolean = false, val error: Throwable? = null)

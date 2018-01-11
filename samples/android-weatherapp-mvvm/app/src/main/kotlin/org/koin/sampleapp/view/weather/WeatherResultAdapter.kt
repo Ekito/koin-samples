@@ -34,6 +34,5 @@ class WeatherResultAdapter(var list: List<DailyForecastModel>, private val onCli
             weatherItemIcon.text = dailyForecastModel.icon
             weatherItemTemp.text = dailyForecastModel.temperatureString
         }
-
     }
 }

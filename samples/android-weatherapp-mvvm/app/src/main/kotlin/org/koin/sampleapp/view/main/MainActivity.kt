@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         val model = getViewModel<MainViewModel>()
 
-        // Start currentSearch weather
+        // Start weatherList weather
         searchButton.setOnClickListener {
             displayProgress()
             val address = getSearchText()
@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             model.searchWeather(address)
         }
 
-        model.weatherSearch.observe(this, android.arch.lifecycle.Observer<MainUIModel> {
+        model.searchEvent.observe(this, android.arch.lifecycle.Observer<SearchEvent> {
             if (it != null) {
                 if (it.isLoading) {
                     displayProgress()
@@ -51,7 +51,6 @@ class MainActivity : AppCompatActivity() {
                         onWeatherFailed(it.error)
                     }
                 }
-                searchEditText.setText(it.searchText)
             }
         })
     }
