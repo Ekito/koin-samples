@@ -12,10 +12,10 @@ val testDatasourceModule = applicationContext {
     provide { LocalDataSource(JavaReader()) as WeatherDatasource }
 }
 
-val RXTestModule = applicationContext {
+val testRxModule = applicationContext {
     // provided components
     provide { TestSchedulerProvider() as SchedulerProvider }
 }
 
-val testRemoteDatasource = weatherAppModules + RXTestModule //listOf(RXTestModule, weatherModule, RemoteDataSourceModule)
-val testLocalDatasource = weatherAppModules + RXTestModule + testDatasourceModule //listOf(RXTestModule, weatherModule, testDatasourceModule)
+val testRemoteDatasource = weatherAppModules + testRxModule //listOf(testRxModule, weatherModule, RemoteDataSourceModule)
+val testLocalDatasource = weatherAppModules + testRxModule + testDatasourceModule //listOf(testRxModule, weatherModule, testDatasourceModule)

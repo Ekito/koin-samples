@@ -6,14 +6,9 @@
     android:gravity="center"
     android:orientation="vertical">
 
-    <fragment
-        android:name="org.koin.sampleapp.view.weather.WeatherTitleFragment"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-
-    <fragment
-        android:name="org.koin.sampleapp.view.weather.WeatherListFragment"
-        android:layout_width="wrap_content"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/weatherList"
+        android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
 </LinearLayout>

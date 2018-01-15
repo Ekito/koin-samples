@@ -9,6 +9,7 @@ import org.junit.Test
 import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.view.main.MainUIModel
 import org.koin.sampleapp.view.main.MainViewModel
+import org.koin.sampleapp.view.main.SearchEvent
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
@@ -23,7 +24,9 @@ class MainViewModelTest : KoinTest {
 
     val mainViewModel: MainViewModel by inject()
 
-    @Mock lateinit var observer: Observer<MainUIModel>
+    @Mock lateinit var searchObserver: Observer<SearchEvent>
+    @Mock lateinit var uiObserver: Observer<MainUIModel>
+
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
@@ -40,11 +43,13 @@ class MainViewModelTest : KoinTest {
 
     @Test
     fun testGetWeather() {
-        mainViewModel.weatherSearch.observeForever(observer)
+        mainViewModel.searchEvent.observeForever(searchObserver)
+        mainViewModel.uiData.observeForever(uiObserver)
 
         mainViewModel.searchWeather(locationString)
 
-        verify(observer).onChanged(MainUIModel(locationString, true))
-        verify(observer).onChanged(MainUIModel(locationString, false))
+        verify(searchObserver).onChanged(SearchEvent(isLoading = true))
+        verify(searchObserver).onChanged(SearchEvent(isSuccess = true))
+        verify(uiObserver).onChanged(MainUIModel(locationString))
     }
 }
