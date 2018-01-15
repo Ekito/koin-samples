@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_weather_list.*
+import kotlinx.android.synthetic.main.fragment_weather_title.*
 import org.koin.android.ext.android.property
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties
@@ -24,16 +24,17 @@ class WeatherTitleFragment : Fragment() {
 
     val model: WeatherResultViewModel by viewModel()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_weather_title, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        return inflater.inflate(R.layout.fragment_weather_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         weatherTitle.text = getString(R.string.weather_title).format(address, now)
 
         model.selectEvent.observe(this, android.arch.lifecycle.Observer { e ->
-            Log.i(TAG,"got event : $e")
+            Log.i(TAG, "got event : $e")
             //TODO handle clicked - display in title
         })
     }

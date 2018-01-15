@@ -8,7 +8,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import kotlinx.android.synthetic.main.fragment_weather_title.*
+import kotlinx.android.synthetic.main.fragment_weather_list.*
 import org.koin.android.architecture.ext.getViewModel
 import org.koin.sampleapp.R
 import org.koin.sampleapp.ext.viewModel
@@ -22,12 +22,12 @@ class WeatherListFragment : Fragment() {
     val model: WeatherResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_weather_list, container, false)
+        return inflater?.inflate(R.layout.fragment_weather_title, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun onStart() {
+        super.onStart()
+        
         val model = getViewModel<WeatherResultViewModel>()
         model.weatherList.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
             if (it != null) {

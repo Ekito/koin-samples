@@ -12,5 +12,9 @@ class WeatherResultActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
+
+        supportFragmentManager.beginTransaction()
+                .add(R.id.weather_title, WeatherTitleFragment(), "title")
+                .commit()
     }
 }
