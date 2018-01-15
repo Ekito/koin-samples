@@ -1,6 +1,5 @@
 package org.koin.sampleapp.view.weather
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
@@ -13,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_weather_list.*
 import org.koin.sampleapp.R
 import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.model.DailyForecastModel
-import org.koin.sampleapp.view.detail.WeatherDetailActivity
 
 class WeatherListFragment : Fragment() {
 

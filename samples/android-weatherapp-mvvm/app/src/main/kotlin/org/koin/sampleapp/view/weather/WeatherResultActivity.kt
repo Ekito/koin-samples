@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import org.koin.android.architecture.ext.getViewModel
 import org.koin.sampleapp.R
+import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.view.detail.WeatherDetailActivity
 
 /**
@@ -16,12 +16,12 @@ class WeatherResultActivity : AppCompatActivity() {
 
     val TAG = javaClass.simpleName
 
+    val model: WeatherResultViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        val model: WeatherResultViewModel = getViewModel()
         Log.i(TAG, "model : $model")
         model.selectEvent.observe(this, android.arch.lifecycle.Observer {
             if (it != null) {
