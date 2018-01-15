@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,13 +23,13 @@ class WeatherListFragment : Fragment() {
     val model: WeatherResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_weather_title, container, false)
+        return inflater?.inflate(R.layout.fragment_weather_list, container, false)
     }
 
-    override fun onStart() {
-        super.onStart()
-        
-        val model = getViewModel<WeatherResultViewModel>()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        Log.i("TAG","model : $model")
         model.weatherList.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
             if (it != null) {
                 val weatherList = it.list

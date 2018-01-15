@@ -25,7 +25,7 @@ class WeatherTitleFragment : Fragment() {
     val model: WeatherResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.fragment_weather_list, container, false)
+        return inflater.inflate(R.layout.fragment_weather_title, container, false) as ViewGroup
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -33,6 +33,7 @@ class WeatherTitleFragment : Fragment() {
 
         weatherTitle.text = getString(R.string.weather_title).format(address, now)
 
+        Log.i("TAG","model : $model")
         model.selectEvent.observe(this, android.arch.lifecycle.Observer { e ->
             Log.i(TAG, "got event : $e")
             //TODO handle clicked - display in title

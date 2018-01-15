@@ -13,8 +13,14 @@ class WeatherResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        supportFragmentManager.beginTransaction()
-                .add(R.id.weather_title, WeatherTitleFragment(), "title")
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.weather_title, WeatherTitleFragment())
+                .commit()
+
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.weather_title, WeatherListFragment())
                 .commit()
     }
 }
