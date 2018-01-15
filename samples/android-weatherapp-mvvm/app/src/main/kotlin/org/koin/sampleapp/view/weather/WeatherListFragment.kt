@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather_list.*
-import org.koin.android.architecture.ext.getViewModel
 import org.koin.sampleapp.R
 import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.model.DailyForecastModel
@@ -19,6 +18,8 @@ import org.koin.sampleapp.view.detail.WeatherDetailActivity
 class WeatherListFragment : Fragment() {
 
     private lateinit var weatherResultAdapter: WeatherResultAdapter
+
+    val TAG = javaClass.simpleName
 
     val model: WeatherResultViewModel by viewModel()
 
@@ -29,21 +30,12 @@ class WeatherListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.i("TAG","model : $model")
+        Log.i(TAG, "model : $model")
         model.weatherList.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
             if (it != null) {
                 val weatherList = it.list
                 if (weatherList != weatherResultAdapter.list && weatherList.isNotEmpty()) {
                     displayWeather(weatherList)
-                } else if (it.error != null) {
-                    displayError(it.error)
-                }
-            }
-        })
-        model.selectEvent.observe(this, android.arch.lifecycle.Observer {
-            if (it != null) {
-                if (it.isSelected) {
-                    onDetailSaved()
                 } else if (it.error != null) {
                     displayError(it.error)
                 }
@@ -60,10 +52,6 @@ class WeatherListFragment : Fragment() {
     fun displayWeather(weatherList: List<DailyForecastModel>) {
         weatherResultAdapter.list = weatherList
         weatherResultAdapter.notifyDataSetChanged()
-    }
-
-    fun onDetailSaved() {
-        activity.startActivity(Intent(this.context, WeatherDetailActivity::class.java))
     }
 
     fun displayError(error: Throwable?) {
