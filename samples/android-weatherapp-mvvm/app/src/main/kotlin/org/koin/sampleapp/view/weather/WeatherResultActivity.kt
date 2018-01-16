@@ -40,7 +40,7 @@ class WeatherResultActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.weather_title, WeatherListFragment())
+                .replace(R.id.weather_list, WeatherListFragment())
                 .commit()
 
     }
