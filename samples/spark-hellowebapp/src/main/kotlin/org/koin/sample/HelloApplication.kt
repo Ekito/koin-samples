@@ -3,8 +3,7 @@ package org.koin.sample
 import org.koin.dsl.module.applicationContext
 import org.koin.spark.controller
 import org.koin.spark.runControllers
-import org.koin.spark.startSpark
-import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.spark.start
 import spark.kotlin.get
 
 val helloAppModule = applicationContext {
@@ -39,9 +38,7 @@ class HelloController(val service: HelloService) {
 
 fun main(vararg args: String) {
     // Spark
-    startSpark {
-        // Koin
-        startKoin(listOf(helloAppModule))
+    start(modules = listOf(helloAppModule)) {
         // Controllers
         runControllers()
     }
