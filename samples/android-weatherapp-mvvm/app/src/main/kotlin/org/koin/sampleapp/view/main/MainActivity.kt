@@ -6,11 +6,11 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.architecture.ext.viewModel
 import org.koin.android.ext.android.setProperty
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
-import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.view.weather.WeatherResultActivity
 import java.util.*
 

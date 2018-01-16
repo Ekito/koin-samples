@@ -5,8 +5,8 @@ import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import org.koin.android.architecture.ext.viewModel
 import org.koin.sampleapp.R
-import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.view.detail.WeatherDetailActivity
 
 /**

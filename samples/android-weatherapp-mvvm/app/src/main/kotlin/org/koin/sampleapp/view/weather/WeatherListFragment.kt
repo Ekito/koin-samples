@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather_list.*
+import org.koin.android.architecture.ext.viewModel
 import org.koin.sampleapp.R
-import org.koin.sampleapp.ext.viewModel
 import org.koin.sampleapp.model.DailyForecastModel
 
 class WeatherListFragment : Fragment() {
