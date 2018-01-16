@@ -43,8 +43,11 @@ class WeatherListFragment : Fragment() {
             // save date & weather detail
             model.selectWeatherDetail(weatherDetail)
         })
+
         weatherList.layoutManager = LinearLayoutManager(context)
         weatherList.adapter = weatherResultAdapter
+
+        model.getWeatherList()
     }
 
     fun displayWeather(weatherList: List<DailyForecastModel>) {

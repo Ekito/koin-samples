@@ -4,7 +4,7 @@ import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
+import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
@@ -17,7 +17,7 @@ class RepositoryTest : KoinTest {
 
     @Before
     fun before() {
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
     }
 
     @After
@@ -30,7 +30,7 @@ class RepositoryTest : KoinTest {
         val address = "Paris"
         val weather1 = repository.searchWeather(address).blockingGet()
         val weather2 = repository.searchWeather(address).blockingGet()
-        assertEquals(weather1,weather2)
+        assertEquals(weather1, weather2)
     }
 
     @Test

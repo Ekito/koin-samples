@@ -17,10 +17,6 @@ class WeatherResultViewModel(private val weatherRepository: WeatherRepository, p
     val weatherList = MutableLiveData<WeatherResultUIModel>()
     val selectEvent = SingleLiveEvent<SelectEvent>()
 
-    init {
-        getWeatherList()
-    }
-
     fun getWeatherList() {
         launch {
             weatherRepository.getWeather().map { it.getDailyForecasts() }.with(scheduler)

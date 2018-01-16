@@ -55,7 +55,7 @@ class MainViewModelMockTest {
     @Test
     fun testGetWeatherFailed() {
         val error = IllegalStateException("error !")
-        `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(Completable.error(IllegalStateException("Got error")))
+        `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(Completable.error(error))
 
         mainViewModel.searchEvent.observeForever(searchObserver)
         mainViewModel.uiData.observeForever(uiObserver)
@@ -63,6 +63,7 @@ class MainViewModelMockTest {
         mainViewModel.searchWeather(locationString)
 
         Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
+        Mockito.verify(searchObserver).onChanged(SearchEvent(error = error))
         Mockito.verify(uiObserver).onChanged(MainUIModel(locationString))
     }
 }

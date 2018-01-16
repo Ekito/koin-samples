@@ -14,11 +14,7 @@ class WeatherDetailViewModel(private val weatherRepository: WeatherRepository, p
 
     val detail = MutableLiveData<DailyForecastModel>()
 
-    init {
-        getDetail()
-    }
-
-    private fun getDetail() {
+    fun getDetail() {
         launch {
             weatherRepository.getSelectedWeatherDetail().with(scheduler)
                     .subscribe(

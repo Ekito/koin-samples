@@ -33,6 +33,8 @@ class WeatherDetailActivity : AppCompatActivity() {
                 displayDetail(detail)
             }
         })
+
+        model.getDetail()
     }
 
     fun displayDetail(weather: DailyForecastModel) {

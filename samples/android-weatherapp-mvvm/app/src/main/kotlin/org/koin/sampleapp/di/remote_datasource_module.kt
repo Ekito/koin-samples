@@ -2,13 +2,9 @@ package org.koin.sampleapp.di
 
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import org.koin.android.ext.koin.androidApplication
 import org.koin.dsl.module.applicationContext
 import org.koin.sampleapp.di.DatasourceProperties.SERVER_URL
 import org.koin.sampleapp.repository.WeatherDatasource
-import org.koin.sampleapp.repository.local.AndroidJsonReader
-import org.koin.sampleapp.repository.local.JsonReader
-import org.koin.sampleapp.repository.local.LocalDataSource
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -23,10 +19,6 @@ val remoteDatasourceModule = applicationContext {
     bean { createWebService<WeatherDatasource>(get(), getProperty(SERVER_URL)) }
 }
 
-val locaDatasourceModule = applicationContext {
-    bean { AndroidJsonReader(androidApplication()) as JsonReader }
-    bean { LocalDataSource(get()) as WeatherDatasource }
-}
 
 object DatasourceProperties {
     const val SERVER_URL = "SERVER_URL"

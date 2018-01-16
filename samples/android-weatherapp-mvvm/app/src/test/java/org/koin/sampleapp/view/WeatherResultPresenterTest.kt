@@ -6,7 +6,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
+import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.view.weather.SelectEvent
 import org.koin.sampleapp.view.weather.WeatherResultUIModel
@@ -33,7 +33,7 @@ class WeatherResultPresenterTest : KoinTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
     }
 
     @After
@@ -46,6 +46,7 @@ class WeatherResultPresenterTest : KoinTest {
         repository.searchWeather("test").blockingGet()
 
         viewModel.weatherList.observeForever(listObserver)
+        viewModel.getWeatherList()
 
         val value = viewModel.weatherList.value ?: error("No value for view model")
 
