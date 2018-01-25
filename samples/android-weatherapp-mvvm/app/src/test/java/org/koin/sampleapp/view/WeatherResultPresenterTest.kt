@@ -6,8 +6,9 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
+import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.repository.WeatherRepository
+import org.koin.sampleapp.view.weather.SelectEvent
 import org.koin.sampleapp.view.weather.WeatherResultUIModel
 import org.koin.sampleapp.view.weather.WeatherResultViewModel
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -23,15 +24,16 @@ class WeatherResultPresenterTest : KoinTest {
     val viewModel: WeatherResultViewModel by inject()
     val repository: WeatherRepository by inject()
 
+    @Mock lateinit var listObserver: Observer<WeatherResultUIModel>
+    @Mock lateinit var selectObserver: Observer<SelectEvent>
 
-    @Mock lateinit var observer: Observer<WeatherResultUIModel>
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
     }
 
     @After
@@ -43,25 +45,29 @@ class WeatherResultPresenterTest : KoinTest {
     fun testGotList() {
         repository.searchWeather("test").blockingGet()
 
-        viewModel.currentSearch.observeForever(observer)
+        viewModel.weatherList.observeForever(listObserver)
+        viewModel.getWeatherList()
 
-        val value = viewModel.currentSearch.value ?: error("No value for view model")
+        val value = viewModel.weatherList.value ?: error("No value for view model")
 
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
+        Mockito.verify(listObserver).onChanged(WeatherResultUIModel(value.list))
     }
 
     @Test
     fun testSelected() {
+        viewModel.weatherList.observeForever(listObserver)
+        viewModel.selectEvent.observeForever(selectObserver)
+
         repository.searchWeather("test").blockingGet()
 
-        viewModel.currentSearch.observeForever(observer)
-        val value = viewModel.currentSearch.value ?: error("No value for view model")
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(value.list))
+        viewModel.getWeatherList()
+
+        val value = viewModel.weatherList.value ?: error("No value for view model")
+        Mockito.verify(listObserver).onChanged(WeatherResultUIModel(value.list))
 
         val detail = value.list.first()
         viewModel.selectWeatherDetail(detail)
 
-        Mockito.verify(observer).onChanged(WeatherResultUIModel(selected = true))
+        Mockito.verify(selectObserver).onChanged(SelectEvent(isSelected = true))
     }
-
 }

@@ -11,13 +11,14 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-val RemoteDataSourceModule = applicationContext {
+val remoteDatasourceModule = applicationContext {
     // provided web components
     bean { createOkHttpClient() }
 
     // Fill property
     bean { createWebService<WeatherDatasource>(get(), getProperty(SERVER_URL)) }
 }
+
 
 object DatasourceProperties {
     const val SERVER_URL = "SERVER_URL"

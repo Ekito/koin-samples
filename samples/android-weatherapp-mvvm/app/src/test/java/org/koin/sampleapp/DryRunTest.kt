@@ -4,8 +4,9 @@ import android.arch.core.executor.testing.InstantTaskExecutorRule
 import org.junit.After
 import org.junit.Rule
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
-import org.koin.sampleapp.di.testRemoteDatasource
+import org.koin.sampleapp.di.remoteDatasourceModule
+import org.koin.sampleapp.di.testApp
+import org.koin.sampleapp.di.weatherApp
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.test.KoinTest
@@ -23,13 +24,13 @@ class DryRunTest : KoinTest {
 
     @Test
     fun testRemoteConfiguration() {
-        startKoin(testRemoteDatasource)
+        startKoin(weatherApp + remoteDatasourceModule)
         dryRun()
     }
 
     @Test
     fun testLocalConfiguration() {
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
         dryRun()
     }
 }

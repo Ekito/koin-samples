@@ -4,16 +4,17 @@
     android:layout_height="match_parent"
     android:background="@color/primary"
     android:gravity="center"
+    android:layout_margin="16dp"
     android:orientation="vertical">
 
-    <FrameLayout
-        android:id="@+id/weather_title"
+    <TextView
+        android:id="@+id/weatherTitle"
+        style="@style/TextHeading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <FrameLayout
-        android:id="@+id/weather_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:layout_margin="24dp"
+        android:gravity="center"
+        android:text="@string/weather_title"
+        android:textColor="@color/t_white" />
 
 </LinearLayout>

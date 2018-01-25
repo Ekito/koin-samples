@@ -5,10 +5,9 @@ import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.koin.sample.util.SparkTestUtil
-import org.koin.spark.startSpark
-import org.koin.spark.stopSpark
+import org.koin.spark.start
+import org.koin.spark.stop
 import org.koin.standalone.StandAloneContext.closeKoin
-import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
 import org.koin.test.KoinTest
 import org.mockito.Mockito.`when`
@@ -22,8 +21,7 @@ class HelloControllerMockTest : KoinTest {
 
     @Before()
     fun before() {
-        val port = startSpark(0) {
-            startKoin(listOf(helloMockModule))
+        val port = start(0, modules = listOf(helloMockModule)) {
             HelloController(mockService)
         }
         sparkTest = SparkTestUtil(port)
@@ -32,7 +30,7 @@ class HelloControllerMockTest : KoinTest {
     @After
     fun after() {
         closeKoin()
-        stopSpark(300)
+        stop(300)
     }
 
     @Test

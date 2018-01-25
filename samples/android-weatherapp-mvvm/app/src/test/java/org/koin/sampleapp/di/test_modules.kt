@@ -8,14 +8,13 @@ import org.koin.sampleapp.util.TestSchedulerProvider
 import org.koin.sampleapp.util.rx.SchedulerProvider
 
 
-val testDatasourceModule = applicationContext {
+val localJavaDatasourceModule = applicationContext {
     provide { LocalDataSource(JavaReader()) as WeatherDatasource }
 }
 
-val RXTestModule = applicationContext {
+val testRxModule = applicationContext {
     // provided components
     provide { TestSchedulerProvider() as SchedulerProvider }
 }
 
-val testRemoteDatasource = weatherAppModules + RXTestModule //listOf(RXTestModule, weatherModule, RemoteDataSourceModule)
-val testLocalDatasource = weatherAppModules + RXTestModule + testDatasourceModule //listOf(RXTestModule, weatherModule, testDatasourceModule)
+val testApp = weatherApp + testRxModule + localJavaDatasourceModule
