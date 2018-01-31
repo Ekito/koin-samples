@@ -10,11 +10,13 @@ import org.koin.sampleapp.util.mvp.BaseView
 interface WeatherResultContract {
     interface View : BaseView<Presenter> {
         fun displayWeather(weatherList: List<DailyForecastModel>)
+        fun onDetailSaved()
         fun displayError(error: Throwable)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun getWeather(address: String)
+        fun getWeather()
+        fun selectWeatherDetail(detail: DailyForecastModel)
     }
 }
 

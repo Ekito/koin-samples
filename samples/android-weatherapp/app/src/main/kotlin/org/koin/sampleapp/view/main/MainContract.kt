@@ -15,7 +15,6 @@ interface MainContract {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun clear()
         fun getWeather(address: String)
     }
 }

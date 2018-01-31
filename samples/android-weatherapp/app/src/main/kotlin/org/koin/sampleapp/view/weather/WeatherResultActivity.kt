@@ -38,7 +38,7 @@ class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
         weatherList.layoutManager = LinearLayoutManager(this)
         weatherResultAdapter = WeatherResultAdapter(emptyList(), { weatherDetail ->
             // save date & weather detail
-            setProperty(PROPERTY_WEATHER_DETAIL, weatherDetail)
+            presenter.selectWeatherDetail(weatherDetail)
 
             // Launch detail
             startActivity(Intent(this, WeatherDetailActivity::class.java))
@@ -50,7 +50,7 @@ class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
     override fun onResume() {
         super.onResume()
         presenter.view = this
-        presenter.getWeather(address)
+        presenter.getWeather()
     }
 
     override fun onPause() {
@@ -61,6 +61,10 @@ class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
     override fun displayWeather(weatherList: List<DailyForecastModel>) {
         weatherResultAdapter.list = weatherList
         weatherResultAdapter.notifyDataSetChanged()
+    }
+
+    override fun onDetailSaved() {
+        startActivity(Intent(this, WeatherDetailActivity::class.java))
     }
 
     override fun displayError(error: Throwable) {

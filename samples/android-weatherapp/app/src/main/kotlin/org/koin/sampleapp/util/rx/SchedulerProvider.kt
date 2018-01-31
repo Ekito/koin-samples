@@ -1,5 +1,6 @@
 package org.koin.sampleapp.util.rx
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -16,7 +17,7 @@ interface SchedulerProvider {
 /**
  * Use SchedulerProvider configuration for Observable
  */
-fun <T> Observable<T>.with(schedulerProvider: SchedulerProvider): Observable<T> =
+fun Completable.with(schedulerProvider: SchedulerProvider): Completable =
         this.observeOn(schedulerProvider.ui()).subscribeOn(schedulerProvider.io())
 
 /**

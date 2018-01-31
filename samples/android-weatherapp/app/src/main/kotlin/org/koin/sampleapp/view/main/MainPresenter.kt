@@ -7,16 +7,12 @@ import org.koin.sampleapp.view.AbstractPresenter
 
 class MainPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider) : AbstractPresenter<MainContract.View, MainContract.Presenter>(), MainContract.Presenter {
 
-    override fun clear() {
-        weatherRepository.clearCache()
-    }
-
     override fun getWeather(address: String) {
         view.displayProgress()
         launch {
-            weatherRepository.getWeather(address)
+            weatherRepository.searchWeather(address)
                     .with(schedulerProvider)
-                    .subscribe({ _ ->
+                    .subscribe({
                         view.displayNormal()
                         view.onWeatherSuccess()
                     }, { error ->
