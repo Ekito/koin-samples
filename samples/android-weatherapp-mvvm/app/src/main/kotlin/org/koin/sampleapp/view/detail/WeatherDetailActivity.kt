@@ -24,8 +24,6 @@ class WeatherDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
 
-        weatherTitle.text = getString(R.string.weather_title).format(address, now)
-
         val model = getViewModel<WeatherDetailViewModel>()
 
         model.detail.observe(this, android.arch.lifecycle.Observer { detail ->
@@ -38,6 +36,7 @@ class WeatherDetailActivity : AppCompatActivity() {
     }
 
     fun displayDetail(weather: DailyForecastModel) {
+        weatherTitle.text = getString(R.string.weather_title).format(address, now)
         weatherItemIcon.text = weather.icon
         weatherItemForecast.text = weather.forecastString
         weatherItemTemp.text = weather.temperatureString

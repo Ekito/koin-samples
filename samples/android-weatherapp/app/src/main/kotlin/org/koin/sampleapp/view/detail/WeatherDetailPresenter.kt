@@ -9,9 +9,10 @@ class WeatherDetailPresenter(val weatherRepository: WeatherRepository, val sched
 
     override fun getDetail() {
         launch {
-            weatherRepository.getSelectedWeatherDetail().with(schedulerProvider).subscribe { detail ->
-                view.displayDetail(detail)
-            }
+            weatherRepository.getSelectedWeatherDetail().with(schedulerProvider).subscribe(
+                    { detail ->
+                        view.displayDetail(detail)
+                    }, { err -> println("WeatherDetailPresenter error : $err") })
         }
     }
 }

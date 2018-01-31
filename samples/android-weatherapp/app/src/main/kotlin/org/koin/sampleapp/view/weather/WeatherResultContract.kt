@@ -20,6 +20,5 @@ interface WeatherResultContract {
     }
 }
 
-const val PROPERTY_WEATHER_DETAIL = "WEATHER_DETAIL"
 const val PROPERTY_WEATHER_DATE = "WEATHER_DATE"
 
