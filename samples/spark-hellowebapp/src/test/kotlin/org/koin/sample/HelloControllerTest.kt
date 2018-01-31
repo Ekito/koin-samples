@@ -25,7 +25,6 @@ class HelloControllerTest : KoinTest {
 
     @After
     fun after() {
-        closeKoin()
         stop(200)
     }
 
