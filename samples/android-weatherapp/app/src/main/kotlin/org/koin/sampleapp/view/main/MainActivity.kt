@@ -33,11 +33,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         // Start search weather
         searchButton.setOnClickListener {
-            presenter.getWeather(searchText())
+            presenter.getWeather(getSearchText())
         }
     }
 
-    private fun searchText() = searchEditText.text.trim().toString()
+    fun getSearchText() = searchEditText.text.trim().toString()
 
     override fun onResume() {
         super.onResume()
@@ -63,13 +63,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onWeatherSuccess() {
         // save address
         setProperty(PROPERTY_WEATHER_DATE, Date())
-        setProperty(PROPERTY_ADDRESS, searchText())
+        setProperty(PROPERTY_ADDRESS, getSearchText())
 
         startActivity(Intent(this, WeatherResultActivity::class.java))
     }
 
     override fun onWeatherFailed(error: Throwable) {
-
         Snackbar.make(this.currentFocus, "Got error : $error", Snackbar.LENGTH_LONG).show()
     }
 }

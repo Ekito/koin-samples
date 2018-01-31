@@ -73,9 +73,7 @@ class MainActivity : AppCompatActivity() {
         // save properties
         setProperty(PROPERTY_WEATHER_DATE, Date())
         setProperty(PROPERTY_ADDRESS, getSearchText())
-        val intent = Intent(this, WeatherResultActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-        startActivity(intent)
+        startActivity(Intent(this, WeatherResultActivity::class.java))
     }
 
     fun onWeatherFailed(error: Throwable?) {
