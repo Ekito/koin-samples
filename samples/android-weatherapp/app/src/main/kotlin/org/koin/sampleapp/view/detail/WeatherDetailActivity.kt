@@ -34,8 +34,8 @@ class WeatherDetailActivity : AppCompatActivity(), WeatherDetailContract.View {
     }
 
     override fun onPause() {
-        super.onPause()
         presenter.stop()
+        super.onPause()
     }
 
     override fun displayDetail(weather: DailyForecastModel) {

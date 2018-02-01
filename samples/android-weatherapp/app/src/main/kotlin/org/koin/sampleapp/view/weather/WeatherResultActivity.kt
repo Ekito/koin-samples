@@ -39,9 +39,6 @@ class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
         weatherResultAdapter = WeatherResultAdapter(emptyList(), { weatherDetail ->
             // save date & weather detail
             presenter.selectWeatherDetail(weatherDetail)
-
-            // Launch detail
-            startActivity(Intent(this, WeatherDetailActivity::class.java))
         })
         weatherList.itemAnimator = DefaultItemAnimator()
         weatherList.adapter = weatherResultAdapter
