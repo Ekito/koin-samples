@@ -4,17 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.DefaultItemAnimator
-import android.support.v7.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_weather.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.property
+import org.koin.android.ext.android.releaseContext
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
-import org.koin.sampleapp.model.DailyForecastModel
+import org.koin.sampleapp.di.Context
 import org.koin.sampleapp.view.detail.WeatherDetailActivity
-import java.util.*
 
 /**
  * Weather View
@@ -22,32 +16,25 @@ import java.util.*
 class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
 
     override val presenter by inject<WeatherResultContract.Presenter>()
-    // Get address
-    private val address by property<String>(PROPERTY_ADDRESS)
-    // get Last date
-    private val now by property<Date>(PROPERTY_WEATHER_DATE)
-
-    private lateinit var weatherResultAdapter: WeatherResultAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        weatherTitle.text = getString(R.string.weather_title).format(address, now)
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.weather_title, WeatherTitleFragment())
+                .commit()
 
-        weatherList.layoutManager = LinearLayoutManager(this)
-        weatherResultAdapter = WeatherResultAdapter(emptyList(), { weatherDetail ->
-            // save date & weather detail
-            presenter.selectWeatherDetail(weatherDetail)
-        })
-        weatherList.itemAnimator = DefaultItemAnimator()
-        weatherList.adapter = weatherResultAdapter
+        supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.weather_list, WeatherListFragment())
+                .commit()
     }
 
     override fun onResume() {
         super.onResume()
         presenter.view = this
-        presenter.getWeather()
     }
 
     override fun onPause() {
@@ -55,9 +42,9 @@ class WeatherResultActivity : AppCompatActivity(), WeatherResultContract.View {
         super.onPause()
     }
 
-    override fun displayWeather(weatherList: List<DailyForecastModel>) {
-        weatherResultAdapter.list = weatherList
-        weatherResultAdapter.notifyDataSetChanged()
+    override fun onStop() {
+        super.onStop()
+        releaseContext(Context.WEATHER_LIST)
     }
 
     override fun onDetailSaved() {
