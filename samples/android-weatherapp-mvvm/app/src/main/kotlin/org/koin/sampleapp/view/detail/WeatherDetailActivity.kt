@@ -20,19 +20,19 @@ class WeatherDetailActivity : AppCompatActivity() {
     private val address by property<String>(PROPERTY_ADDRESS)
     private val now by property<Date>(PROPERTY_WEATHER_DATE)
 
+    val model : WeatherDetailViewModel by getViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
-
-        val model = getViewModel<WeatherDetailViewModel>()
 
         model.detail.observe(this, android.arch.lifecycle.Observer { detail ->
             if (detail != null) {
                 displayDetail(detail)
             }
         })
-
         model.getDetail()
+        //Get Weather detail
     }
 
     fun displayDetail(weather: DailyForecastModel) {

@@ -37,7 +37,7 @@ class HelloController(val service: HelloService) {
 }
 
 fun main(vararg args: String) {
-    // Spark
+    // Spark with Koin
     start(modules = listOf(helloAppModule)) {
         // Controllers
         runControllers()
