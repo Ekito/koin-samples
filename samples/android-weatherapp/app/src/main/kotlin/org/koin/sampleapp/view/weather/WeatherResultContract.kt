@@ -19,6 +19,3 @@ interface WeatherResultContract {
         fun selectWeatherDetail(detail: DailyForecastModel)
     }
 }
-
-const val PROPERTY_WEATHER_DATE = "WEATHER_DATE"
-

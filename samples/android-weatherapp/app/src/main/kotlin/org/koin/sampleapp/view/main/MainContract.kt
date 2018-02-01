@@ -18,5 +18,3 @@ interface MainContract {
         fun getWeather(address: String)
     }
 }
-
-const val PROPERTY_ADDRESS: String = "ADDRESS"

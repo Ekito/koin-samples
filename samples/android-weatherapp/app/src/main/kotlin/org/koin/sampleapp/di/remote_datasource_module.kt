@@ -3,7 +3,7 @@ package org.koin.sampleapp.di
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.dsl.module.applicationContext
-import org.koin.sampleapp.di.Properties.SERVER_URL
+import org.koin.sampleapp.di.DatasourceProperties.SERVER_URL
 import org.koin.sampleapp.repository.WeatherDatasource
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -11,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 
-val RemoteDataSourceModule = applicationContext {
+val remoteDatasourceModule = applicationContext {
     // provided web components
     bean { createOkHttpClient() }
 
@@ -19,7 +19,8 @@ val RemoteDataSourceModule = applicationContext {
     bean { createWebService<WeatherDatasource>(get(), getProperty(SERVER_URL)) }
 }
 
-object Properties {
+
+object DatasourceProperties {
     const val SERVER_URL = "SERVER_URL"
 }
 
