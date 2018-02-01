@@ -9,11 +9,11 @@ import android.support.v7.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_weather.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.property
-import org.koin.android.ext.android.setProperty
 import org.koin.sampleapp.R
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.view.detail.WeatherDetailActivity
-import org.koin.sampleapp.view.main.PROPERTY_ADDRESS
 import java.util.*
 
 /**

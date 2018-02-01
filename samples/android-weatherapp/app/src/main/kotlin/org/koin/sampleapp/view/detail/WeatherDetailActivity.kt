@@ -6,9 +6,9 @@ import kotlinx.android.synthetic.main.activity_weather_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.property
 import org.koin.sampleapp.R
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
 import org.koin.sampleapp.model.DailyForecastModel
-import org.koin.sampleapp.view.main.PROPERTY_ADDRESS
-import org.koin.sampleapp.view.weather.PROPERTY_WEATHER_DATE
 import java.util.*
 
 /**
