@@ -1,14 +1,12 @@
 package org.koin.sampleapp
 
 import org.junit.After
-import org.junit.Before
 import org.junit.Test
-import org.koin.Koin
-import org.koin.log.PrintLogger
-import org.koin.sampleapp.di.Properties.SERVER_URL
+import org.koin.sampleapp.di.DatasourceProperties.SERVER_URL
+import org.koin.sampleapp.di.remoteDatasourceModule
 import org.koin.sampleapp.di.testLocalDatasource
 import org.koin.sampleapp.di.testRemoteDatasource
-import org.koin.sampleapp.di.weatherAppModules
+import org.koin.sampleapp.di.weatherApp
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.test.KoinTest
@@ -25,7 +23,7 @@ class DryRunTest : KoinTest {
 
     @Test
     fun normalConfiguration() {
-        startKoin(weatherAppModules, properties = defaultProperties)
+        startKoin(weatherApp+ remoteDatasourceModule, properties = defaultProperties)
         dryRun()
     }
 
