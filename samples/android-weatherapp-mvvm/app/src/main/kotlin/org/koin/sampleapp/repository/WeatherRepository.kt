@@ -3,17 +3,16 @@ package org.koin.sampleapp.repository
 import io.reactivex.Completable
 import io.reactivex.Single
 import org.koin.sampleapp.model.DailyForecastModel
-import org.koin.sampleapp.repository.json.getLocation
-import org.koin.sampleapp.repository.json.weather.Weather
+import org.koin.sampleapp.repository.data.getDailyForecasts
+import org.koin.sampleapp.repository.data.getLocation
 
 /**
  * Weather repository
  */
 interface WeatherRepository {
     fun searchWeather(location: String): Completable
-    fun getWeather(): Single<Weather>
-    fun selectWeatherDetail(detail: DailyForecastModel): Completable
-    fun getSelectedWeatherDetail(): Single<DailyForecastModel>
+    fun getWeather(): Single<List<DailyForecastModel>>
+    fun getSelectedWeatherDetail(id: String): Single<DailyForecastModel>
 }
 
 /**
@@ -22,40 +21,21 @@ interface WeatherRepository {
  */
 class WeatherRepositoryImpl(private val weatherDatasource: WeatherDatasource) : WeatherRepository {
 
-    var weatherCache: Pair<String, Weather>? = null
+    val weatherCache = arrayListOf<DailyForecastModel>()
 
-    private var detail: DailyForecastModel? = null
+    override fun getSelectedWeatherDetail(id: String) = Single.just(weatherCache.first { it.id == id })
 
-    private val DEFAULT_LANG = "EN"
+    override fun searchWeather(location: String): Completable = weatherDatasource.geocode(location)
+            .map { it.getLocation() ?: throw IllegalStateException("No Location data") }
+            .flatMap { weatherDatasource.weather(it.lat, it.lng, DEFAULT_LANG) }
+            .map { it.getDailyForecasts() }
+            .doOnSuccess { weatherCache.clear(); weatherCache.addAll(it) }
+            .toCompletable()
 
-    override fun selectWeatherDetail(detail: DailyForecastModel) =
-            Completable.create {
-                this.detail = detail
-                it.onComplete()
-            }
+    override fun getWeather(): Single<List<DailyForecastModel>> = Single.just(weatherCache)
 
-    override fun getSelectedWeatherDetail(): Single<DailyForecastModel> = if (detail != null) Single.just(detail) else Single.error(IllegalStateException("Detail is null ! You must select a detail before"))
-
-    override fun searchWeather(location: String): Completable {
-        val cache = weatherCache
-        return if (cache?.first == location) {
-            Completable.complete()
-        } else {
-            weatherDatasource.geocode(location)
-                    .map { it.getLocation() ?: throw IllegalStateException("No Location data") }
-                    .flatMap { weatherDatasource.weather(it.lat, it.lng, DEFAULT_LANG) }
-                    .doOnSuccess { weatherCache = Pair(location, it) }
-                    .toCompletable()
-        }
-    }
-
-    override fun getWeather(): Single<Weather> {
-        val cache = weatherCache
-        return if (cache != null) {
-            Single.just(cache.second)
-        } else {
-            Single.error(IllegalStateException("No request cached - please use searchWeather() before"))
-        }
+    companion object {
+        const val DEFAULT_LANG = "EN"
     }
 
 }

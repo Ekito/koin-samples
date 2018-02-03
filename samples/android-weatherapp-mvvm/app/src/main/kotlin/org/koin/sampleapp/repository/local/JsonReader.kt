@@ -1,8 +1,8 @@
 package org.koin.sampleapp.repository.local
 
-import org.koin.sampleapp.repository.json.geocode.Geocode
-import org.koin.sampleapp.repository.json.geocode.Location
-import org.koin.sampleapp.repository.json.weather.Weather
+import org.koin.sampleapp.repository.data.geocode.Geocode
+import org.koin.sampleapp.repository.data.geocode.Location
+import org.koin.sampleapp.repository.data.weather.Weather
 
 interface JsonReader {
     fun getAllLocations(): Map<Location, String>

@@ -1,8 +1,8 @@
 package org.koin.sampleapp.repository
 
 import io.reactivex.Single
-import org.koin.sampleapp.repository.json.geocode.Geocode
-import org.koin.sampleapp.repository.json.weather.Weather
+import org.koin.sampleapp.repository.data.geocode.Geocode
+import org.koin.sampleapp.repository.data.weather.Weather
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.Query

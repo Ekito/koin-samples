@@ -30,6 +30,7 @@ val rxModule = applicationContext {
 object WeatherAppProperties {
     const val PROPERTY_ADDRESS: String = "PROPERTY_ADDRESS"
     const val PROPERTY_WEATHER_DATE = "WEATHER_DATE"
+    const val PROPERTY_WEATHER_ITEM_ID: String = "WEATHER_ID"
 }
 
 // Gather all app modules

@@ -7,6 +7,7 @@ import org.koin.android.architecture.ext.getViewModel
 import org.koin.android.ext.android.property
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_ITEM_ID
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
 import org.koin.sampleapp.model.DailyForecastModel
 import java.util.*
@@ -19,20 +20,19 @@ class WeatherDetailActivity : AppCompatActivity() {
     // Get all needed data
     private val address by property<String>(PROPERTY_ADDRESS)
     private val now by property<Date>(PROPERTY_WEATHER_DATE)
-
-    val model : WeatherDetailViewModel by getViewModel()
+    private val id by property<String>(PROPERTY_WEATHER_ITEM_ID)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
 
+        val model = getViewModel<WeatherDetailViewModel>()
         model.detail.observe(this, android.arch.lifecycle.Observer { detail ->
             if (detail != null) {
                 displayDetail(detail)
             }
         })
-        model.getDetail()
-        //Get Weather detail
+        model.getDetail(id)
     }
 
     fun displayDetail(weather: DailyForecastModel) {
