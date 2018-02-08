@@ -1,6 +1,7 @@
 package org.koin.sampleapp.view
 
 import android.arch.lifecycle.ViewModel
+import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
@@ -12,6 +13,7 @@ abstract class AbstractViewModel : ViewModel() {
         disposables.add(job())
     }
 
+    @CallSuper
     override fun onCleared() {
         super.onCleared()
         disposables.clear()

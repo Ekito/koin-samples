@@ -46,7 +46,7 @@ dependencies {
     compile 'com.joanzapata.iconify:android-iconify-weathericons:2.2.2'
 
     //json
-    compile 'com.google.code.gson:gson:2.8.0'
+    compile 'com.google.code.gson:gson:2.8.1'
 
     // Networking
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -56,9 +56,9 @@ dependencies {
     compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.0.0"
-    annotationProcessor "android.arch.lifecycle:compiler:1.0.0"
-    testImplementation 'android.arch.core:core-testing:1.0.0'
+    implementation "android.arch.lifecycle:extensions:1.1.0"
+    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
+    testImplementation 'android.arch.core:core-testing:1.1.0'
 
     // Rx
     compile "io.reactivex.rxjava2:rxjava:$rxjava_version"

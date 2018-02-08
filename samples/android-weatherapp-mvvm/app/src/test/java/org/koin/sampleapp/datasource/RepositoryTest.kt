@@ -46,6 +46,6 @@ class RepositoryTest : KoinTest {
     fun testGetWeatherFailed() {
         val test = repository.getWeather().test()
         test.awaitTerminalEvent()
-        test.assertError { it is IllegalStateException }
+        test.assertValue { list -> list.isEmpty() }
     }
 }

@@ -1,13 +1,13 @@
 package org.koin.sampleapp.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.architecture.ext.viewModel
-import org.koin.android.ext.android.setProperty
+import org.koin.android.ext.android.properties
+import org.koin.android.ext.android.startActivity
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
@@ -71,9 +71,12 @@ class MainActivity : AppCompatActivity() {
 
     fun onWeatherSuccess() {
         // save properties
-        setProperty(PROPERTY_WEATHER_DATE, Date())
-        setProperty(PROPERTY_ADDRESS, getSearchText())
-        startActivity(Intent(this, WeatherResultActivity::class.java))
+        startActivity<WeatherResultActivity> {
+            properties(
+                    PROPERTY_WEATHER_DATE to Date(),
+                    PROPERTY_ADDRESS to getSearchText()
+            )
+        }
     }
 
     fun onWeatherFailed(error: Throwable?) {

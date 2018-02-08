@@ -24,8 +24,10 @@ class WeatherResultPresenterTest : KoinTest {
     val viewModel: WeatherResultViewModel by inject()
     val repository: WeatherRepository by inject()
 
-    @Mock lateinit var listObserver: Observer<WeatherResultUIModel>
-    @Mock lateinit var selectObserver: Observer<SelectEvent>
+    @Mock
+    lateinit var listObserver: Observer<WeatherResultUIModel>
+    @Mock
+    lateinit var selectObserver: Observer<SelectEvent>
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -66,8 +68,9 @@ class WeatherResultPresenterTest : KoinTest {
         Mockito.verify(listObserver).onChanged(WeatherResultUIModel(value.list))
 
         val detail = value.list.first()
-        viewModel.selectWeatherDetail(detail)
+        val id = detail.id
+        viewModel.selectWeatherDetail(id)
 
-        Mockito.verify(selectObserver).onChanged(SelectEvent(isSelected = true))
+        Mockito.verify(selectObserver).onChanged(SelectEvent(id))
     }
 }
