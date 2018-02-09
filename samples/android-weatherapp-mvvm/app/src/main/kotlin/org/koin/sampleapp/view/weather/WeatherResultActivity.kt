@@ -5,8 +5,8 @@ import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import org.koin.android.architecture.ext.viewModel
-import org.koin.android.ext.android.intentProperty
-import org.koin.android.ext.android.properties
+import org.koin.android.ext.android.argument
+import org.koin.android.ext.android.arguments
 import org.koin.android.ext.android.startActivity
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
@@ -24,8 +24,8 @@ class WeatherResultActivity : AppCompatActivity() {
 
     val model: WeatherResultViewModel by viewModel()
 
-    val date: Date by intentProperty(PROPERTY_WEATHER_DATE)
-    val address: String by intentProperty(PROPERTY_ADDRESS)
+    val date: Date by argument(PROPERTY_WEATHER_DATE)
+    val address: String by argument(PROPERTY_ADDRESS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +44,13 @@ class WeatherResultActivity : AppCompatActivity() {
         })
 
         // Launch fragments
+        val weatherResultTitleFragment = WeatherResultTitleFragment()
+                .arguments(PROPERTY_WEATHER_DATE to date,
+                        PROPERTY_ADDRESS to address)
+
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.weather_title, WeatherResultTitleFragment())
+                .replace(R.id.weather_title, weatherResultTitleFragment)
                 .commit()
 
         supportFragmentManager
@@ -58,7 +62,7 @@ class WeatherResultActivity : AppCompatActivity() {
 
     fun onWeatherSelected(id: String) {
         startActivity<WeatherDetailActivity> {
-            properties(
+            arguments(
                     PROPERTY_WEATHER_DATE to date,
                     PROPERTY_ADDRESS to address,
                     PROPERTY_WEATHER_ITEM_ID to id)
