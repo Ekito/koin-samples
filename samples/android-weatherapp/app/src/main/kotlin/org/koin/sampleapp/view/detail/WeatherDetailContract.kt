@@ -10,6 +10,6 @@ interface WeatherDetailContract {
     }
 
     interface Presenter : BasePresenter<View> {
-        fun getDetail()
+        fun getDetail(id : String)
     }
 }

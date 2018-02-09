@@ -3,11 +3,12 @@ package org.koin.sampleapp.view.detail
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_weather_detail.*
+import org.koin.android.ext.android.argument
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.property
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
+import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_ITEM_ID
 import org.koin.sampleapp.model.DailyForecastModel
 import java.util.*
 
@@ -17,8 +18,9 @@ import java.util.*
 class WeatherDetailActivity : AppCompatActivity(), WeatherDetailContract.View {
 
     // Get all needed data
-    private val address by property<String>(PROPERTY_ADDRESS)
-    private val now by property<Date>(PROPERTY_WEATHER_DATE)
+    private val address by argument<String>(PROPERTY_ADDRESS)
+    private val now by argument<Date>(PROPERTY_WEATHER_DATE)
+    private val detailId by argument<String>(PROPERTY_WEATHER_ITEM_ID)
 
     override val presenter: WeatherDetailContract.Presenter by inject()
 
@@ -27,15 +29,15 @@ class WeatherDetailActivity : AppCompatActivity(), WeatherDetailContract.View {
         setContentView(R.layout.activity_weather_detail)
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.view = this
-        presenter.getDetail()
+        presenter.getDetail(detailId)
     }
 
-    override fun onPause() {
+    override fun onStop() {
         presenter.stop()
-        super.onPause()
+        super.onStop()
     }
 
     override fun displayDetail(weather: DailyForecastModel) {

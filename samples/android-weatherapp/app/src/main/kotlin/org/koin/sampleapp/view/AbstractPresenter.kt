@@ -1,5 +1,6 @@
 package org.koin.sampleapp.view
 
+import android.support.annotation.CallSuper
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import org.koin.sampleapp.util.mvp.BasePresenter
@@ -15,6 +16,7 @@ abstract class AbstractPresenter<V : BaseView<P>, out P : BasePresenter<V>> : Ba
         disposables.add(job())
     }
 
+    @CallSuper
     override fun stop() {
         disposables.clear()
     }

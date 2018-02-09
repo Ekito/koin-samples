@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import org.koin.android.architecture.ext.viewModel
 import org.koin.android.ext.android.argument
-import org.koin.android.ext.android.arguments
 import org.koin.android.ext.android.startActivity
+import org.koin.android.ext.android.withArguments
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
@@ -45,7 +45,7 @@ class WeatherResultActivity : AppCompatActivity() {
 
         // Launch fragments
         val weatherResultTitleFragment = WeatherResultTitleFragment()
-                .arguments(PROPERTY_WEATHER_DATE to date,
+                .withArguments(PROPERTY_WEATHER_DATE to date,
                         PROPERTY_ADDRESS to address)
 
         supportFragmentManager
@@ -62,7 +62,7 @@ class WeatherResultActivity : AppCompatActivity() {
 
     fun onWeatherSelected(id: String) {
         startActivity<WeatherDetailActivity> {
-            arguments(
+            withArguments(
                     PROPERTY_WEATHER_DATE to date,
                     PROPERTY_ADDRESS to address,
                     PROPERTY_WEATHER_ITEM_ID to id)

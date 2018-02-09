@@ -1,14 +1,13 @@
 package org.koin.sampleapp.view.main
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.property
-import org.koin.android.ext.android.setProperty
+import org.koin.android.ext.android.startActivity
+import org.koin.android.ext.android.withArguments
 import org.koin.sampleapp.R
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
 import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
@@ -23,14 +22,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     // Presenter
     override val presenter by inject<MainContract.Presenter>()
 
-    // Get last address or default
-    private val defaultAddress by property(PROPERTY_ADDRESS, "")
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        searchEditText.setText(defaultAddress)
 
         // Start search weather
         searchButton.setOnClickListener {
@@ -43,7 +37,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onResume() {
         super.onResume()
         presenter.view = this
-        //TODO Clear UI ?
     }
 
     override fun onPause() {
@@ -63,10 +56,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun onWeatherSuccess() {
         // save address
-        setProperty(PROPERTY_WEATHER_DATE, Date())
-        setProperty(PROPERTY_ADDRESS, getSearchText())
-
-        startActivity(Intent(this, WeatherResultActivity::class.java))
+        startActivity<WeatherResultActivity> {
+            withArguments(PROPERTY_WEATHER_DATE to Date(),
+                    PROPERTY_ADDRESS to getSearchText())
+        }
     }
 
     override fun onWeatherFailed(error: Throwable) {

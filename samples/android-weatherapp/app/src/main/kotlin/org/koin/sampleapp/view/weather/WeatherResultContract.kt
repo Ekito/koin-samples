@@ -9,7 +9,7 @@ import org.koin.sampleapp.util.mvp.BaseView
  */
 interface WeatherResultContract {
     interface View : BaseView<Presenter> {
-        fun onDetailSaved()
+        fun onDetailSaved(id : String)
         fun displayError(error: Throwable)
     }
 

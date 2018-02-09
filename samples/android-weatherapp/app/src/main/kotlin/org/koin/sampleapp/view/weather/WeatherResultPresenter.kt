@@ -8,6 +8,6 @@ import org.koin.sampleapp.view.AbstractPresenter
  */
 class WeatherResultPresenter() : AbstractPresenter<WeatherResultContract.View, WeatherResultContract.Presenter>(), WeatherResultContract.Presenter {
     override fun selectWeatherDetail(detail: DailyForecastModel) {
-        view.onDetailSaved()
+        view.onDetailSaved(detail.id)
     }
 }
