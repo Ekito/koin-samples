@@ -3,7 +3,7 @@ package org.koin.sampleapp.view
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
+import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.view.main.MainContract
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
@@ -16,12 +16,13 @@ import org.mockito.MockitoAnnotations
 class MainPresenterTest : KoinTest {
 
     val presenter by inject<MainContract.Presenter>()
-    @Mock lateinit var view: MainContract.View
+    @Mock
+    lateinit var view: MainContract.View
 
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
 
         presenter.view = view
     }

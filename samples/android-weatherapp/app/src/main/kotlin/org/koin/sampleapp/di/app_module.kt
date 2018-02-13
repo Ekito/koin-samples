@@ -12,7 +12,7 @@ import org.koin.sampleapp.view.main.MainContract
 import org.koin.sampleapp.view.main.MainPresenter
 import org.koin.sampleapp.view.weather.WeatherListResultContract
 import org.koin.sampleapp.view.weather.WeatherResultContract
-import org.koin.sampleapp.view.weather.WeatherResultListPresenter
+import org.koin.sampleapp.view.weather.WeatherListResultPresenter
 import org.koin.sampleapp.view.weather.WeatherResultPresenter
 
 
@@ -22,7 +22,7 @@ val weatherModule = applicationContext {
 
     context(WEATHER_LIST) {
         bean { WeatherResultPresenter() as WeatherResultContract.Presenter }
-        bean { WeatherResultListPresenter(get(), get(), get()) as WeatherListResultContract.Presenter }
+        bean { WeatherListResultPresenter(get(), get(), get()) as WeatherListResultContract.Presenter }
     }
 
     factory { WeatherDetailPresenter(get(), get()) as WeatherDetailContract.Presenter }

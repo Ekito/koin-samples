@@ -14,21 +14,21 @@ import org.koin.sampleapp.model.DailyForecastModel
 
 class WeatherListFragment : Fragment(), WeatherListResultContract.View {
 
-    private lateinit var weatherResultAdapter: WeatherResultAdapter
+    private lateinit var weatherResultAdapter: WeatherListResultAdapter
 
     val TAG = javaClass.simpleName
 
     override val presenter by inject<WeatherListResultContract.Presenter>()
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.fragment_weather_list, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_weather_list, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         weatherList.layoutManager = LinearLayoutManager(context)
-        weatherResultAdapter = WeatherResultAdapter(emptyList(), { weatherDetail ->
+        weatherResultAdapter = WeatherListResultAdapter(emptyList(), { weatherDetail ->
             presenter.selectWeatherDetail(weatherDetail)
         })
         weatherList.adapter = weatherResultAdapter
@@ -51,6 +51,6 @@ class WeatherListFragment : Fragment(), WeatherListResultContract.View {
     }
 
     override fun displayError(error: Throwable) {
-        Snackbar.make(this.activity.currentFocus, "Got error : $error", Snackbar.LENGTH_LONG).show()
+        Snackbar.make(weatherList, "Got error : $error", Snackbar.LENGTH_LONG).show()
     }
 }

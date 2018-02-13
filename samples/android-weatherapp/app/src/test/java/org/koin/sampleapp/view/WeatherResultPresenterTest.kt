@@ -3,9 +3,8 @@ package org.koin.sampleapp.view
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.sampleapp.di.testLocalDatasource
-import org.koin.sampleapp.util.any
-import org.koin.sampleapp.view.weather.WeatherResultContract
+import org.koin.sampleapp.di.testApp
+import org.koin.sampleapp.view.weather.WeatherListResultContract
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
@@ -16,13 +15,15 @@ import org.mockito.MockitoAnnotations
 
 class WeatherResultPresenterTest : KoinTest {
 
-    val presenter by inject<WeatherResultContract.Presenter>()
-    @Mock lateinit var view: WeatherResultContract.View
+    val presenter by inject<WeatherListResultContract.Presenter>()
+
+    @Mock
+    lateinit var view: WeatherListResultContract.View
 
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        startKoin(testLocalDatasource)
+        startKoin(testApp)
 
         presenter.view = view
     }
@@ -34,10 +35,9 @@ class WeatherResultPresenterTest : KoinTest {
 
     @Test
     fun testDisplayWeather() {
-        val locationString = "Paris, france"
-        presenter.getWeather(locationString)
+        presenter.getWeather()
 
-        Mockito.verify(view).displayWeather(any())
+        Mockito.verify(view).displayWeather(emptyList())
     }
 
 }
