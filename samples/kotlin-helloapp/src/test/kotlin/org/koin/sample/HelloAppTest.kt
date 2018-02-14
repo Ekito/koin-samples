@@ -6,9 +6,9 @@ import org.junit.Test
 import org.koin.sample.Property.WHO
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
-import org.koin.test.AbstractKoinTest
+import org.koin.test.AutoCloseKoinTest
 
-class HelloAppTest : AbstractKoinTest() {
+class HelloAppTest : AutoCloseKoinTest() {
 
     val model by inject<HelloModel>()
     val service by inject<HelloService>()

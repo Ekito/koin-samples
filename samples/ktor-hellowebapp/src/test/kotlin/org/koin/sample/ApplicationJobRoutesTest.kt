@@ -12,11 +12,11 @@ import org.koin.sample.Properties.HELLO_MSG
 import org.koin.sample.Properties.MY_MODEL
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.getProperty
-import org.koin.test.AbstractKoinTest
+import org.koin.test.AutoCloseKoinTest
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
 
-class ApplicationJobRoutesTest : AbstractKoinTest() {
+class ApplicationJobRoutesTest : AutoCloseKoinTest() {
 
     @Before
     fun before() {
