@@ -1,9 +1,8 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.arch.lifecycle.MutableLiveData
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.repository.data.getDailyForecasts
 import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.util.rx.with
 import org.koin.sampleapp.view.AbstractViewModel

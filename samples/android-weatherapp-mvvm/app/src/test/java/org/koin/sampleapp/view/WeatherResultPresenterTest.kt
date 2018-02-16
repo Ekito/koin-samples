@@ -8,9 +8,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.view.weather.SelectEvent
-import org.koin.sampleapp.view.weather.WeatherResultUIModel
-import org.koin.sampleapp.view.weather.WeatherResultViewModel
+import org.koin.sampleapp.view.result.SelectEvent
+import org.koin.sampleapp.view.result.WeatherResultUIModel
+import org.koin.sampleapp.view.result.WeatherResultViewModel
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject

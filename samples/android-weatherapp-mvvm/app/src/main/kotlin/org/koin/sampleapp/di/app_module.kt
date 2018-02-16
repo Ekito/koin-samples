@@ -6,9 +6,9 @@ import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.repository.WeatherRepositoryImpl
 import org.koin.sampleapp.util.rx.ApplicationSchedulerProvider
 import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.view.detail.WeatherDetailViewModel
-import org.koin.sampleapp.view.main.MainViewModel
-import org.koin.sampleapp.view.weather.WeatherResultViewModel
+import org.koin.sampleapp.view.detail.DetailViewModel
+import org.koin.sampleapp.view.result.WeatherResultViewModel
+import org.koin.sampleapp.view.search.MainViewModel
 
 
 val weatherModule = applicationContext {
@@ -17,7 +17,7 @@ val weatherModule = applicationContext {
 
     viewModel { WeatherResultViewModel(get(), get()) }
 
-    viewModel { WeatherDetailViewModel(get(), get()) }
+    viewModel { DetailViewModel(get(), get()) }
 
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
 }
@@ -25,12 +25,6 @@ val weatherModule = applicationContext {
 val rxModule = applicationContext {
     // provided components
     bean { ApplicationSchedulerProvider() as SchedulerProvider }
-}
-
-object WeatherAppProperties {
-    const val PROPERTY_ADDRESS: String = "PROPERTY_ADDRESS"
-    const val PROPERTY_WEATHER_DATE = "WEATHER_DATE"
-    const val PROPERTY_WEATHER_ITEM_ID: String = "WEATHER_ID"
 }
 
 // Gather all app modules

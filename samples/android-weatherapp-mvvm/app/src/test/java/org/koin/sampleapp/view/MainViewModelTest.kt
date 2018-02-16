@@ -7,9 +7,9 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.di.testApp
-import org.koin.sampleapp.view.main.MainUIModel
-import org.koin.sampleapp.view.main.MainViewModel
-import org.koin.sampleapp.view.main.SearchEvent
+import org.koin.sampleapp.view.search.MainUIModel
+import org.koin.sampleapp.view.search.MainViewModel
+import org.koin.sampleapp.view.search.SearchEvent
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject

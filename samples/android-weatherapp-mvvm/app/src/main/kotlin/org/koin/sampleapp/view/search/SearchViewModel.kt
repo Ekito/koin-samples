@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.main
+package org.koin.sampleapp.view.search
 
 import android.arch.lifecycle.MutableLiveData
 import org.koin.sampleapp.repository.WeatherRepository

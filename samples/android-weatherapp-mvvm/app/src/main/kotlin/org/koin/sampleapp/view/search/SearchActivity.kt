@@ -1,24 +1,23 @@
-package org.koin.sampleapp.view.main
+package org.koin.sampleapp.view.search
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
+import org.jetbrains.anko.startActivity
 import org.koin.android.architecture.ext.viewModel
-import org.koin.android.ext.android.startActivity
-import org.koin.android.ext.android.withArguments
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
-import org.koin.sampleapp.view.weather.WeatherResultActivity
+import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_DATE
+import org.koin.sampleapp.view.result.ResultActivity
 import java.util.*
 
 
 /**
  * Weather View
  */
-class MainActivity : AppCompatActivity() {
+class SearchActivity : AppCompatActivity() {
 
     val model: MainViewModel by viewModel()
 
@@ -71,12 +70,9 @@ class MainActivity : AppCompatActivity() {
 
     fun onWeatherSuccess() {
         // save properties
-        startActivity<WeatherResultActivity> {
-            withArguments(
-                    PROPERTY_WEATHER_DATE to Date(),
-                    PROPERTY_ADDRESS to getSearchText()
-            )
-        }
+        startActivity<ResultActivity>(
+                ARG_WEATHER_DATE to Date(),
+                ARG_ADDRESS to getSearchText())
     }
 
     fun onWeatherFailed(error: Throwable?) {

@@ -1,31 +1,31 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
+import org.jetbrains.anko.startActivity
 import org.koin.android.architecture.ext.viewModel
-import org.koin.android.ext.android.argument
-import org.koin.android.ext.android.startActivity
-import org.koin.android.ext.android.withArguments
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_ITEM_ID
-import org.koin.sampleapp.view.detail.WeatherDetailActivity
+import org.koin.sampleapp.util.ext.argument
+import org.koin.sampleapp.util.ext.withArguments
+import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_DATE
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_ITEM_ID
+import org.koin.sampleapp.view.detail.DetailActivity
 import java.util.*
 
 /**
  * Weather View
  */
-class WeatherResultActivity : AppCompatActivity() {
+class ResultActivity : AppCompatActivity() {
 
     val TAG = javaClass.simpleName
 
     val model: WeatherResultViewModel by viewModel()
 
-    val date: Date by argument(PROPERTY_WEATHER_DATE)
-    val address: String by argument(PROPERTY_ADDRESS)
+    val date: Date by argument(ARG_WEATHER_DATE)
+    val address: String by argument(ARG_ADDRESS)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,9 +44,9 @@ class WeatherResultActivity : AppCompatActivity() {
         })
 
         // Launch fragments
-        val weatherResultTitleFragment = WeatherResultTitleFragment()
-                .withArguments(PROPERTY_WEATHER_DATE to date,
-                        PROPERTY_ADDRESS to address)
+        val weatherResultTitleFragment = ResultHeaderFragment()
+                .withArguments(ARG_WEATHER_DATE to date,
+                        ARG_ADDRESS to address)
 
         supportFragmentManager
                 .beginTransaction()
@@ -55,18 +55,16 @@ class WeatherResultActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.weather_list, WeatherResultListFragment())
+                .replace(R.id.weather_list, ResultListFragment())
                 .commit()
 
     }
 
     fun onWeatherSelected(id: String) {
-        startActivity<WeatherDetailActivity> {
-            withArguments(
-                    PROPERTY_WEATHER_DATE to date,
-                    PROPERTY_ADDRESS to address,
-                    PROPERTY_WEATHER_ITEM_ID to id)
-        }
+        startActivity<DetailActivity>(
+                ARG_WEATHER_DATE to date,
+                ARG_ADDRESS to address,
+                ARG_WEATHER_ITEM_ID to id)
     }
 
     fun displayError(error: Throwable?) {

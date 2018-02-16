@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +10,7 @@ import com.joanzapata.iconify.widget.IconTextView
 import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
-class WeatherResultAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<WeatherResultAdapter.WeatherResultHolder>() {
+class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<ResultAdapter.WeatherResultHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherResultHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
         return WeatherResultHolder(view)

@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -13,9 +13,9 @@ import org.koin.android.architecture.ext.viewModel
 import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
-class WeatherResultListFragment : Fragment() {
+class ResultListFragment : Fragment() {
 
-    private lateinit var weatherResultAdapter: WeatherResultAdapter
+    private lateinit var weatherResultAdapter: ResultAdapter
 
     val TAG = javaClass.simpleName
 
@@ -43,7 +43,7 @@ class WeatherResultListFragment : Fragment() {
         })
 
         // Bind onItemClicked with adapter
-        weatherResultAdapter = WeatherResultAdapter(emptyList(), onItemClicked())
+        weatherResultAdapter = ResultAdapter(emptyList(), onItemClicked())
         weatherList.layoutManager = LinearLayoutManager(context)
         weatherList.adapter = weatherResultAdapter
 

@@ -6,6 +6,8 @@ ext {
     okhttp_version = '3.8.1'
     retrofit_version = '2.2.0'
     rxjava_version = '2.1.7'
+    androidArchitectureVersion = "1.1.0"
+    anko_version='0.10.4'
 }
 
 android {
@@ -43,6 +45,10 @@ dependencies {
     testImplementation "org.koin:koin-test:$koin_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
+    // Anko
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // UI
     implementation 'com.joanzapata.iconify:android-iconify-weathericons:2.2.2'
 
     //json
@@ -56,9 +62,9 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
 
     // ViewModel and LiveData
-    implementation "android.arch.lifecycle:extensions:1.1.0"
-    annotationProcessor "android.arch.lifecycle:compiler:1.1.0"
-    testImplementation 'android.arch.core:core-testing:1.1.0'
+    implementation "android.arch.lifecycle:extensions:$androidArchitectureVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$androidArchitectureVersion"
+    testImplementation "android.arch.core:core-testing:$androidArchitectureVersion"
 
     // Rx
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"

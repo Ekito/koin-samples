@@ -8,9 +8,9 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.TestSchedulerProvider
-import org.koin.sampleapp.view.main.MainUIModel
-import org.koin.sampleapp.view.main.MainViewModel
-import org.koin.sampleapp.view.main.SearchEvent
+import org.koin.sampleapp.view.search.MainUIModel
+import org.koin.sampleapp.view.search.MainViewModel
+import org.koin.sampleapp.view.search.SearchEvent
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
 import org.mockito.Mockito
