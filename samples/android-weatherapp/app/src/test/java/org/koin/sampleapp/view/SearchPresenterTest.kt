@@ -4,7 +4,7 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.sampleapp.di.testApp
-import org.koin.sampleapp.view.weather.WeatherListResultContract
+import org.koin.sampleapp.view.search.SearchContract
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
 import org.koin.standalone.inject
@@ -13,12 +13,11 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 
-class WeatherResultPresenterTest : KoinTest {
+class SearchPresenterTest : KoinTest {
 
-    val presenter by inject<WeatherListResultContract.Presenter>()
-
+    val presenter by inject<SearchContract.Presenter>()
     @Mock
-    lateinit var view: WeatherListResultContract.View
+    lateinit var view: SearchContract.View
 
     @Before
     fun before() {
@@ -34,10 +33,11 @@ class WeatherResultPresenterTest : KoinTest {
     }
 
     @Test
-    fun testDisplayWeather() {
-        presenter.getWeather()
+    fun testGetWeather() {
+        val locationString = "Paris, france"
+        presenter.getWeather(locationString)
 
-        Mockito.verify(view).displayWeather(emptyList())
+        Mockito.verify(view).displayNormal()
+        Mockito.verify(view).onWeatherSuccess()
     }
-
 }

@@ -1,11 +1,11 @@
-package org.koin.sampleapp.view.main
+package org.koin.sampleapp.view.search
 
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.util.rx.with
 import org.koin.sampleapp.view.AbstractPresenter
 
-class MainPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider) : AbstractPresenter<MainContract.View, MainContract.Presenter>(), MainContract.Presenter {
+class SearchPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider) : AbstractPresenter<SearchContract.View, SearchContract.Presenter>(), SearchContract.Presenter {
 
     override fun getWeather(address: String) {
         view.displayProgress()

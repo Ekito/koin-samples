@@ -8,7 +8,7 @@ import retrofit2.http.Headers
 import retrofit2.http.Query
 
 /**
- * Retrofit services
+ * Weather datasource - Retrofit tagged
  */
 interface WeatherDatasource {
 

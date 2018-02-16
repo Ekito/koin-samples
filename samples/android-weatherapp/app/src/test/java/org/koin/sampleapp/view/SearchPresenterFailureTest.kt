@@ -6,8 +6,8 @@ import org.junit.Test
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.TestSchedulerProvider
 import org.koin.sampleapp.util.any
-import org.koin.sampleapp.view.main.MainContract
-import org.koin.sampleapp.view.main.MainPresenter
+import org.koin.sampleapp.view.search.SearchContract
+import org.koin.sampleapp.view.search.SearchPresenter
 import org.koin.test.KoinTest
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
@@ -15,18 +15,18 @@ import org.mockito.Mockito
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
-class MainPresenterFailureTest : KoinTest {
+class SearchPresenterFailureTest : KoinTest {
 
-    lateinit var presenter: MainContract.Presenter
+    lateinit var presenter: SearchContract.Presenter
     @Mock
-    lateinit var view: MainContract.View
+    lateinit var view: SearchContract.View
     @Mock
     lateinit var repository: WeatherRepository
 
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        presenter = MainPresenter(repository, TestSchedulerProvider())
+        presenter = SearchPresenter(repository, TestSchedulerProvider())
 
         presenter.view = view
     }

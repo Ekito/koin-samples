@@ -6,26 +6,27 @@ import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.repository.WeatherRepositoryImpl
 import org.koin.sampleapp.util.rx.ApplicationSchedulerProvider
 import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.view.detail.WeatherDetailContract
-import org.koin.sampleapp.view.detail.WeatherDetailPresenter
-import org.koin.sampleapp.view.main.MainContract
-import org.koin.sampleapp.view.main.MainPresenter
-import org.koin.sampleapp.view.weather.WeatherListResultContract
-import org.koin.sampleapp.view.weather.WeatherResultContract
-import org.koin.sampleapp.view.weather.WeatherListResultPresenter
-import org.koin.sampleapp.view.weather.WeatherResultPresenter
+import org.koin.sampleapp.view.detail.DetailContract
+import org.koin.sampleapp.view.detail.DetailPresenter
+import org.koin.sampleapp.view.search.SearchContract
+import org.koin.sampleapp.view.search.SearchPresenter
+import org.koin.sampleapp.view.result.ResultListContract
+import org.koin.sampleapp.view.result.ResultContract
+import org.koin.sampleapp.view.result.ResultListPresenter
+import org.koin.sampleapp.view.result.ResultPresenter
 
 
 val weatherModule = applicationContext {
 
-    factory { MainPresenter(get(), get()) as MainContract.Presenter }
+    factory { SearchPresenter(get(), get()) as SearchContract.Presenter }
 
+    // custom context to hold both presenter instances
     context(WEATHER_LIST) {
-        bean { WeatherResultPresenter() as WeatherResultContract.Presenter }
-        bean { WeatherListResultPresenter(get(), get(), get()) as WeatherListResultContract.Presenter }
+        bean { ResultPresenter() as ResultContract.Presenter }
+        bean { ResultListPresenter(get(), get(), get()) as ResultListContract.Presenter }
     }
 
-    factory { WeatherDetailPresenter(get(), get()) as WeatherDetailContract.Presenter }
+    factory { DetailPresenter(get(), get()) as DetailContract.Presenter }
 
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
 }
@@ -37,12 +38,6 @@ val rxModule = applicationContext {
 
 object Context {
     const val WEATHER_LIST = "WEATHER_LIST"
-}
-
-object WeatherAppProperties {
-    const val PROPERTY_ADDRESS: String = "PROPERTY_ADDRESS"
-    const val PROPERTY_WEATHER_DATE = "WEATHER_DATE"
-    const val PROPERTY_WEATHER_ITEM_ID: String = "WEATHER_ID"
 }
 
 // Gather all app modules

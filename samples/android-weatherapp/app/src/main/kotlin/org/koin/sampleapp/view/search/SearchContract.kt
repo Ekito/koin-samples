@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.main
+package org.koin.sampleapp.view.search
 
 import org.koin.sampleapp.util.mvp.BasePresenter
 import org.koin.sampleapp.util.mvp.BaseView
@@ -6,7 +6,7 @@ import org.koin.sampleapp.util.mvp.BaseView
 /**
  * Weather MVP Contract
  */
-interface MainContract {
+interface SearchContract {
     interface View : BaseView<Presenter> {
         fun displayNormal()
         fun displayProgress()

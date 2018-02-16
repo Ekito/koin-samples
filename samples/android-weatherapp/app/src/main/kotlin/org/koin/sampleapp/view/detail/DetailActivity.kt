@@ -3,26 +3,26 @@ package org.koin.sampleapp.view.detail
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_weather_detail.*
-import org.koin.android.ext.android.argument
 import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_ADDRESS
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_DATE
-import org.koin.sampleapp.di.WeatherAppProperties.PROPERTY_WEATHER_ITEM_ID
 import org.koin.sampleapp.model.DailyForecastModel
+import org.koin.sampleapp.util.ext.argument
+import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_DATE
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_ITEM_ID
 import java.util.*
 
 /**
  * Weather Detail View
  */
-class WeatherDetailActivity : AppCompatActivity(), WeatherDetailContract.View {
+class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     // Get all needed data
-    private val address by argument<String>(PROPERTY_ADDRESS)
-    private val now by argument<Date>(PROPERTY_WEATHER_DATE)
-    private val detailId by argument<String>(PROPERTY_WEATHER_ITEM_ID)
+    private val address by argument<String>(ARG_ADDRESS)
+    private val now by argument<Date>(ARG_WEATHER_DATE)
+    private val detailId by argument<String>(ARG_WEATHER_ITEM_ID)
 
-    override val presenter: WeatherDetailContract.Presenter by inject()
+    override val presenter: DetailContract.Presenter by inject()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

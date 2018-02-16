@@ -1,17 +1,19 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.util.mvp.BasePresenter
 import org.koin.sampleapp.util.mvp.BaseView
 
-interface WeatherListResultContract {
+/**
+ * Weather MVP Contract
+ */
+interface ResultContract {
     interface View : BaseView<Presenter> {
-        fun displayWeather(weatherList: List<DailyForecastModel>)
+        fun onDetailSaved(id : String)
         fun displayError(error: Throwable)
     }
 
     interface Presenter : BasePresenter<View> {
-        fun getWeather()
         fun selectWeatherDetail(detail: DailyForecastModel)
     }
 }

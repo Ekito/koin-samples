@@ -12,13 +12,13 @@ import org.koin.sampleapp.view.AbstractViewModel
  */
 class DetailViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
 
-    val uiDetail = MutableLiveData<DailyForecastModel>()
+    val uiData = MutableLiveData<DailyForecastModel>()
 
     fun getDetail(id: String) {
         launch {
             weatherRepository.getSelectedWeatherDetail(id).with(scheduler)
                     .subscribe(
-                            { d -> uiDetail.value = d },
+                            { d -> uiData.value = d },
                             { e -> println("got error : $e") })
         }
     }

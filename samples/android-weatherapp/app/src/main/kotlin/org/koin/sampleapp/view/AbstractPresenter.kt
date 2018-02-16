@@ -6,6 +6,12 @@ import io.reactivex.disposables.Disposable
 import org.koin.sampleapp.util.mvp.BasePresenter
 import org.koin.sampleapp.util.mvp.BaseView
 
+/**
+ * Base Preenter feature - for Rx Jobs
+ *
+ * launch() - launch a Rx request
+ * clear all request on stop
+ */
 abstract class AbstractPresenter<V : BaseView<P>, out P : BasePresenter<V>> : BasePresenter<V> {
 
     override lateinit var view: V

@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -12,13 +12,13 @@ import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
-class WeatherListFragment : Fragment(), WeatherListResultContract.View {
+class ResultListFragment : Fragment(), ResultListContract.View {
 
-    private lateinit var weatherResultAdapter: WeatherListResultAdapter
+    private lateinit var weatherResultAdapter: ResultListAdapter
 
     val TAG = javaClass.simpleName
 
-    override val presenter by inject<WeatherListResultContract.Presenter>()
+    override val presenter by inject<ResultListContract.Presenter>()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather_list, container, false)
@@ -28,7 +28,7 @@ class WeatherListFragment : Fragment(), WeatherListResultContract.View {
         super.onViewCreated(view, savedInstanceState)
 
         weatherList.layoutManager = LinearLayoutManager(context)
-        weatherResultAdapter = WeatherListResultAdapter(emptyList(), { weatherDetail ->
+        weatherResultAdapter = ResultListAdapter(emptyList(), { weatherDetail ->
             presenter.selectWeatherDetail(weatherDetail)
         })
         weatherList.adapter = weatherResultAdapter

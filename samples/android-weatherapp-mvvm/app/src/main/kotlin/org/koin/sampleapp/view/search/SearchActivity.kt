@@ -19,13 +19,13 @@ import java.util.*
  */
 class SearchActivity : AppCompatActivity() {
 
-    val model: MainViewModel by viewModel()
+    val model: SearchViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Start weatherList weather
+        // Start uiData weather
         searchButton.setOnClickListener {
             displayProgress()
             val address = getSearchText()

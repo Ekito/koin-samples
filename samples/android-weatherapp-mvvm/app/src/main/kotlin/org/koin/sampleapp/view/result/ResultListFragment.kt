@@ -15,11 +15,11 @@ import org.koin.sampleapp.model.DailyForecastModel
 
 class ResultListFragment : Fragment() {
 
-    private lateinit var weatherResultAdapter: ResultAdapter
+    private lateinit var weatherResultAdapter: ResultListAdapter
 
     val TAG = javaClass.simpleName
 
-    val model: WeatherResultViewModel by viewModel()
+    val model: ResultViewModel by viewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather_list, container, false)
@@ -31,7 +31,7 @@ class ResultListFragment : Fragment() {
         Log.i(TAG, "model : $model")
 
         // Listen Weather list
-        model.weatherList.observe(this, android.arch.lifecycle.Observer<WeatherResultUIModel> {
+        model.uiData.observe(this, android.arch.lifecycle.Observer<ResultUIModel> {
             if (it != null) {
                 val weatherList = it.list
                 if (weatherList != weatherResultAdapter.list && weatherList.isNotEmpty()) {
@@ -43,7 +43,7 @@ class ResultListFragment : Fragment() {
         })
 
         // Bind onItemClicked with adapter
-        weatherResultAdapter = ResultAdapter(emptyList(), onItemClicked())
+        weatherResultAdapter = ResultListAdapter(emptyList(), onItemClicked())
         weatherList.layoutManager = LinearLayoutManager(context)
         weatherList.adapter = weatherResultAdapter
 

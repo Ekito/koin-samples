@@ -5,6 +5,9 @@ import org.koin.sampleapp.repository.json.geocode.Geocode
 import org.koin.sampleapp.repository.json.geocode.Location
 import org.koin.sampleapp.repository.json.weather.Weather
 
+/**
+ * Common parts for Json reader
+ */
 abstract class BaseReader : JsonReader {
 
     private val gson = Gson()

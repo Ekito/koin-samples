@@ -4,7 +4,7 @@ import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.util.mvp.BasePresenter
 import org.koin.sampleapp.util.mvp.BaseView
 
-interface WeatherDetailContract {
+interface DetailContract {
     interface View : BaseView<Presenter> {
         fun displayDetail(weather: DailyForecastModel)
     }

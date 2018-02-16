@@ -10,7 +10,7 @@ import com.joanzapata.iconify.widget.IconTextView
 import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
-class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<ResultAdapter.WeatherResultHolder>() {
+class ResultListAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<ResultListAdapter.WeatherResultHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherResultHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
@@ -35,5 +35,6 @@ class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (Da
             weatherItemIcon.text = dailyForecastModel.icon
             weatherItemTemp.text = dailyForecastModel.temperatureString
         }
+
     }
 }

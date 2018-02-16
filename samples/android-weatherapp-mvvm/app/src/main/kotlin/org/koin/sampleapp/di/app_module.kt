@@ -7,15 +7,15 @@ import org.koin.sampleapp.repository.WeatherRepositoryImpl
 import org.koin.sampleapp.util.rx.ApplicationSchedulerProvider
 import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.view.detail.DetailViewModel
-import org.koin.sampleapp.view.result.WeatherResultViewModel
-import org.koin.sampleapp.view.search.MainViewModel
+import org.koin.sampleapp.view.result.ResultViewModel
+import org.koin.sampleapp.view.search.SearchViewModel
 
 
 val weatherModule = applicationContext {
 
-    viewModel { MainViewModel(get(), get()) }
+    viewModel { SearchViewModel(get(), get()) }
 
-    viewModel { WeatherResultViewModel(get(), get()) }
+    viewModel { ResultViewModel(get(), get()) }
 
     viewModel { DetailViewModel(get(), get()) }
 

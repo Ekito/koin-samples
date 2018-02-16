@@ -2,10 +2,11 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
-ext{
+ext {
     okhttp_version = '3.8.1'
     retrofit_version = '2.2.0'
-    rxjava_version = '2.1.6'
+    rxjava_version = '2.1.7'
+    anko_version = '0.10.4'
 }
 
 android {
@@ -45,10 +46,14 @@ dependencies {
     compile "org.koin:koin-android:$koin_version"
     testCompile "org.koin:koin-test:$koin_version"
 
+    // Anko
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // UI
     compile 'com.joanzapata.iconify:android-iconify-weathericons:2.2.2'
 
-    //json
-    compile 'com.google.code.gson:gson:2.8.0'
+    // Gson
+    compile 'com.google.code.gson:gson:2.8.1'
 
     // Networking
     compile "com.squareup.retrofit2:retrofit:$retrofit_version"

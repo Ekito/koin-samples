@@ -2,7 +2,7 @@ package org.koin.sampleapp
 
 import org.junit.After
 import org.junit.Test
-import org.koin.sampleapp.di.localJavaDatasourceModule
+import org.koin.sampleapp.di.remoteDatasourceModule
 import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.di.weatherApp
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -19,7 +19,7 @@ class DryRunTest : KoinTest {
 
     @Test
     fun testRemoteConfiguration() {
-        startKoin(weatherApp + localJavaDatasourceModule)
+        startKoin(weatherApp + remoteDatasourceModule)
         dryRun()
     }
 

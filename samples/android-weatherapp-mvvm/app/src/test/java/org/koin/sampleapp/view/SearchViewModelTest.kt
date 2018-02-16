@@ -7,8 +7,8 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.di.testApp
-import org.koin.sampleapp.view.search.MainUIModel
-import org.koin.sampleapp.view.search.MainViewModel
+import org.koin.sampleapp.view.search.SearchUIModel
+import org.koin.sampleapp.view.search.SearchViewModel
 import org.koin.sampleapp.view.search.SearchEvent
 import org.koin.standalone.StandAloneContext.closeKoin
 import org.koin.standalone.StandAloneContext.startKoin
@@ -18,14 +18,14 @@ import org.mockito.Mock
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
-class MainViewModelTest : KoinTest {
+class SearchViewModelTest : KoinTest {
 
     val locationString = "Paris, france"
 
-    val mainViewModel: MainViewModel by inject()
+    val mainViewModel: SearchViewModel by inject()
 
     @Mock lateinit var searchObserver: Observer<SearchEvent>
-    @Mock lateinit var uiObserver: Observer<MainUIModel>
+    @Mock lateinit var uiObserver: Observer<SearchUIModel>
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -50,6 +50,6 @@ class MainViewModelTest : KoinTest {
 
         verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         verify(searchObserver).onChanged(SearchEvent(isSuccess = true))
-        verify(uiObserver).onChanged(MainUIModel(locationString))
+        verify(uiObserver).onChanged(SearchUIModel(locationString))
     }
 }

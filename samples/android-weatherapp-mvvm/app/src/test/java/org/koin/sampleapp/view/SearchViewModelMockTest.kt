@@ -8,8 +8,8 @@ import org.junit.Rule
 import org.junit.Test
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.TestSchedulerProvider
-import org.koin.sampleapp.view.search.MainUIModel
-import org.koin.sampleapp.view.search.MainViewModel
+import org.koin.sampleapp.view.search.SearchUIModel
+import org.koin.sampleapp.view.search.SearchViewModel
 import org.koin.sampleapp.view.search.SearchEvent
 import org.mockito.ArgumentMatchers
 import org.mockito.Mock
@@ -18,15 +18,15 @@ import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 
-class MainViewModelMockTest {
+class SearchViewModelMockTest {
 
     val locationString = "Paris, france"
 
-    lateinit var mainViewModel: MainViewModel
+    lateinit var mainViewModel: SearchViewModel
 
     @Mock lateinit var repository: WeatherRepository
     @Mock lateinit var searchObserver: Observer<SearchEvent>
-    @Mock lateinit var uiObserver: Observer<MainUIModel>
+    @Mock lateinit var uiObserver: Observer<SearchUIModel>
 
     @get:Rule
     val rule = InstantTaskExecutorRule()
@@ -34,7 +34,7 @@ class MainViewModelMockTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        mainViewModel = MainViewModel(repository, TestSchedulerProvider())
+        mainViewModel = SearchViewModel(repository, TestSchedulerProvider())
     }
 
     @Test
@@ -49,7 +49,7 @@ class MainViewModelMockTest {
 
         Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         Mockito.verify(searchObserver).onChanged(SearchEvent(isSuccess = true))
-        Mockito.verify(uiObserver).onChanged(MainUIModel(locationString))
+        Mockito.verify(uiObserver).onChanged(SearchUIModel(locationString))
     }
 
     @Test
@@ -64,6 +64,6 @@ class MainViewModelMockTest {
 
         Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         Mockito.verify(searchObserver).onChanged(SearchEvent(error = error))
-        Mockito.verify(uiObserver).onChanged(MainUIModel(locationString))
+        Mockito.verify(uiObserver).onChanged(SearchUIModel(locationString))
     }
 }

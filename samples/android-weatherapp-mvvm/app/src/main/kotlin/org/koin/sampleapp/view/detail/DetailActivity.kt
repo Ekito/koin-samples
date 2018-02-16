@@ -28,7 +28,7 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather_detail)
 
-        detailViewModel.uiDetail.observe(this, android.arch.lifecycle.Observer { detail ->
+        detailViewModel.uiData.observe(this, android.arch.lifecycle.Observer { detail ->
             if (detail != null) {
                 displayDetail(detail)
             }

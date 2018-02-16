@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
@@ -9,7 +9,7 @@ import org.koin.sampleapp.view.AbstractPresenter
 /**
  * Weather Presenter
  */
-class WeatherListResultPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, val weatherResultPresenter: WeatherResultContract.Presenter) : AbstractPresenter<WeatherListResultContract.View, WeatherListResultContract.Presenter>(), WeatherListResultContract.Presenter {
+class ResultListPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, val weatherResultPresenter: ResultContract.Presenter) : AbstractPresenter<ResultListContract.View, ResultListContract.Presenter>(), ResultListContract.Presenter {
 
     override fun getWeather() {
         launch {

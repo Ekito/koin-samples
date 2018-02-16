@@ -11,26 +11,26 @@ import org.koin.sampleapp.view.SingleLiveEvent
 /**
  * Weather Presenter
  */
-class WeatherResultViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
+class ResultViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
 
-    val weatherList = MutableLiveData<WeatherResultUIModel>()
-    val selectEvent = SingleLiveEvent<SelectEvent>()
+    val uiData = MutableLiveData<ResultUIModel>()
+    val selectEvent = SingleLiveEvent<ResultSelectEvent>()
 
     fun getWeatherList() {
         launch {
             weatherRepository.getWeather().with(scheduler)
                     .subscribe({ list ->
-                        weatherList.value = WeatherResultUIModel(list)
+                        uiData.value = ResultUIModel(list)
                     }, { e ->
-                        weatherList.value = WeatherResultUIModel(error = e)
+                        uiData.value = ResultUIModel(error = e)
                     })
         }
     }
 
     fun selectWeatherDetail(id: String) {
-        selectEvent.value = SelectEvent(idSelected = id)
+        selectEvent.value = ResultSelectEvent(idSelected = id)
     }
 }
 
-data class WeatherResultUIModel(val list: List<DailyForecastModel> = emptyList(), val error: Throwable? = null)
-data class SelectEvent(val idSelected: String? = null, val error: Throwable? = null)
+data class ResultUIModel(val list: List<DailyForecastModel> = emptyList(), val error: Throwable? = null)
+data class ResultSelectEvent(val idSelected: String? = null, val error: Throwable? = null)

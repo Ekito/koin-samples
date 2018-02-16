@@ -1,4 +1,4 @@
-package org.koin.sampleapp.view.weather
+package org.koin.sampleapp.view.result
 
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
@@ -10,7 +10,8 @@ import com.joanzapata.iconify.widget.IconTextView
 import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
-class WeatherListResultAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<WeatherListResultAdapter.WeatherResultHolder>() {
+class ResultListAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<ResultListAdapter.WeatherResultHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherResultHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
         return WeatherResultHolder(view)
@@ -22,7 +23,7 @@ class WeatherListResultAdapter(var list: List<DailyForecastModel>, private val o
 
     override fun getItemCount() = list.size
 
-    class WeatherResultHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class WeatherResultHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val weatherItemLayout = item.findViewById<LinearLayout>(R.id.weatherItemLayout)
         private val weatherItemForecast = item.findViewById<TextView>(R.id.weatherItemForecast)
         private val weatherItemTemp = item.findViewById<TextView>(R.id.weatherItemTemp)
@@ -34,6 +35,5 @@ class WeatherListResultAdapter(var list: List<DailyForecastModel>, private val o
             weatherItemIcon.text = dailyForecastModel.icon
             weatherItemTemp.text = dailyForecastModel.temperatureString
         }
-
     }
 }

@@ -7,14 +7,14 @@ import org.koin.sampleapp.util.rx.with
 import org.koin.sampleapp.view.AbstractViewModel
 import org.koin.sampleapp.view.SingleLiveEvent
 
-class MainViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
+class SearchViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
 
     val searchEvent = SingleLiveEvent<SearchEvent>()
-    val uiData = MutableLiveData<MainUIModel>()
+    val uiData = MutableLiveData<SearchUIModel>()
 
     fun searchWeather(address: String) {
         launch {
-            uiData.value = MainUIModel(address)
+            uiData.value = SearchUIModel(address)
             searchEvent.value = SearchEvent(isLoading = true)
 
             weatherRepository.searchWeather(address)
@@ -30,5 +30,5 @@ class MainViewModel(private val weatherRepository: WeatherRepository, private va
     }
 }
 
-data class MainUIModel(val searchText: String? = null)
+data class SearchUIModel(val searchText: String? = null)
 data class SearchEvent(val isLoading: Boolean = false, val isSuccess: Boolean = false, val error: Throwable? = null)

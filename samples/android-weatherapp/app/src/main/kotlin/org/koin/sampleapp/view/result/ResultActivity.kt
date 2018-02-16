@@ -3,10 +3,11 @@ package org.koin.sampleapp.view.result
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import org.jetbrains.anko.startActivity
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.ext.android.inject
+import org.koin.android.ext.android.releaseContext
 import org.koin.sampleapp.R
+import org.koin.sampleapp.di.Context
 import org.koin.sampleapp.util.ext.argument
 import org.koin.sampleapp.util.ext.withArguments
 import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
@@ -18,11 +19,9 @@ import java.util.*
 /**
  * Weather View
  */
-class ResultActivity : AppCompatActivity() {
+class ResultActivity : AppCompatActivity(), ResultContract.View {
 
-    val TAG = javaClass.simpleName
-
-    val model: ResultViewModel by viewModel()
+    override val presenter by inject<ResultContract.Presenter>()
 
     val date: Date by argument(ARG_WEATHER_DATE)
     val address: String by argument(ARG_ADDRESS)
@@ -31,43 +30,44 @@ class ResultActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        // Listen for weather id selected
-        Log.i(TAG, "model : $model")
-        model.selectEvent.observe(this, android.arch.lifecycle.Observer {
-            if (it != null) {
-                if (it.idSelected != null) {
-                    onWeatherSelected(it.idSelected)
-                } else if (it.error != null) {
-                    displayError(it.error)
-                }
-            }
-        })
-
-        // Launch fragments
-        val weatherResultTitleFragment = ResultHeaderFragment()
+        val weatherTitleFragment = ResultHeaderFragment()
                 .withArguments(ARG_WEATHER_DATE to date,
                         ARG_ADDRESS to address)
 
         supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.weather_title, weatherResultTitleFragment)
+                .replace(R.id.weather_title, weatherTitleFragment)
                 .commit()
 
         supportFragmentManager
                 .beginTransaction()
                 .replace(R.id.weather_list, ResultListFragment())
                 .commit()
-
     }
 
-    fun onWeatherSelected(id: String) {
+    override fun onResume() {
+        super.onResume()
+        presenter.view = this
+    }
+
+    override fun onPause() {
+        presenter.stop()
+        super.onPause()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        releaseContext(Context.WEATHER_LIST)
+    }
+
+    override fun onDetailSaved(id: String) {
         startActivity<DetailActivity>(
                 ARG_WEATHER_DATE to date,
                 ARG_ADDRESS to address,
                 ARG_WEATHER_ITEM_ID to id)
     }
 
-    fun displayError(error: Throwable?) {
-        Snackbar.make(currentFocus, "Got error : $error", Snackbar.LENGTH_LONG).show()
+    override fun displayError(error: Throwable) {
+        Snackbar.make(this.currentFocus, "Got error : $error", Snackbar.LENGTH_LONG).show()
     }
 }
