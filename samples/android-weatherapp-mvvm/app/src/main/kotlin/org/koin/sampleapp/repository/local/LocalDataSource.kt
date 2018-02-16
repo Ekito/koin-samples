@@ -6,43 +6,44 @@ import org.koin.sampleapp.repository.data.geocode.Geocode
 import org.koin.sampleapp.repository.data.geocode.Location
 import org.koin.sampleapp.repository.data.weather.Weather
 
+/**
+ * Read json files and render weather data
+ */
 class LocalDataSource(val jsonReader: JsonReader) : WeatherDatasource {
     private val cities = HashMap<Location, String>()
-    private val default_city = "toulouse"
 
     init {
         cities += jsonReader.getAllLocations()
     }
 
-    private fun isKnownCity(adrs: String): Boolean = cities.values.contains(adrs)
+    private fun isKnownCity(address: String): Boolean = cities.values.contains(address)
 
     private fun cityFromLocation(lat: Double?, lng: Double?): String {
-        var city = "toulouse"
-        cities.keys
-                .filter { it.lat == lat && it.lng == lng }
-                .forEach { city = cities[it]!! }
-
-        return city
+        return cities.filterKeys { it.lat == lat && it.lng == lng }.values.firstOrNull()
+                ?: DEFAULT_CITY
     }
 
     override fun geocode(address: String): Single<Geocode> {
-        return Single.create { e ->
-            val adrs = address.toLowerCase()
-            val geocode: Geocode
-            if (isKnownCity(adrs)) {
-                geocode = jsonReader.getGeocode(adrs)
+        return Single.create { s ->
+            val addressToLC = address.toLowerCase()
+            val geocode = if (isKnownCity(addressToLC)) {
+                jsonReader.getGeocode(addressToLC)
             } else {
-                geocode = jsonReader.getGeocode(default_city)
+                jsonReader.getGeocode(DEFAULT_CITY)
             }
-            e.onSuccess(geocode)
+            s.onSuccess(geocode)
         }
     }
 
     override fun weather(lat: Double?, lon: Double?, lang: String): Single<Weather> {
-        return Single.create { e ->
+        return Single.create { s ->
             val city = cityFromLocation(lat, lon)
             val weather = jsonReader.getWeather(city)
-            e.onSuccess(weather)
+            s.onSuccess(weather)
         }
+    }
+
+    companion object {
+        const val DEFAULT_CITY = "toulouse"
     }
 }

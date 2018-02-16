@@ -7,16 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather_title.*
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.WeatherAppProperties
 import org.koin.sampleapp.util.ext.argument
+import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
+import org.koin.sampleapp.view.Arguments.ARG_WEATHER_DATE
 import java.util.*
 
 class ResultHeaderFragment : Fragment() {
 
     val TAG = javaClass.simpleName
 
-    val date: Date by argument(WeatherAppProperties.PROPERTY_WEATHER_DATE)
-    val address: String by argument(WeatherAppProperties.PROPERTY_ADDRESS)
+    val date: Date by argument(ARG_WEATHER_DATE)
+    val address: String by argument(ARG_ADDRESS)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         return inflater.inflate(R.layout.fragment_weather_title, container, false) as ViewGroup

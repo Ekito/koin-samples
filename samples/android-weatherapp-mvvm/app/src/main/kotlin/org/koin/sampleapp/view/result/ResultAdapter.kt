@@ -11,6 +11,7 @@ import org.koin.sampleapp.R
 import org.koin.sampleapp.model.DailyForecastModel
 
 class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (DailyForecastModel) -> Unit) : RecyclerView.Adapter<ResultAdapter.WeatherResultHolder>() {
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WeatherResultHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_weather, parent, false)
         return WeatherResultHolder(view)
@@ -22,7 +23,7 @@ class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (Da
 
     override fun getItemCount() = list.size
 
-    class WeatherResultHolder(item: View) : RecyclerView.ViewHolder(item) {
+    inner class WeatherResultHolder(item: View) : RecyclerView.ViewHolder(item) {
         private val weatherItemLayout = item.findViewById<LinearLayout>(R.id.weatherItemLayout)
         private val weatherItemForecast = item.findViewById<TextView>(R.id.weatherItemForecast)
         private val weatherItemTemp = item.findViewById<TextView>(R.id.weatherItemTemp)
@@ -34,6 +35,5 @@ class ResultAdapter(var list: List<DailyForecastModel>, private val onClick: (Da
             weatherItemIcon.text = dailyForecastModel.icon
             weatherItemTemp.text = dailyForecastModel.temperatureString
         }
-
     }
 }

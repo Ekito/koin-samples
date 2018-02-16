@@ -4,7 +4,7 @@ import org.koin.sampleapp.repository.local.BaseReader
 import java.io.File
 
 /**
- * Created by arnaud on 12/10/2017.
+ * Json Java File reader
  */
 class JavaReader : BaseReader() {
 
