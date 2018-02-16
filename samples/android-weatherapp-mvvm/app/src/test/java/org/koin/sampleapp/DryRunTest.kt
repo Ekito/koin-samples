@@ -24,6 +24,7 @@ class DryRunTest : KoinTest {
 
     @Test
     fun testRemoteConfiguration() {
+        // Use remote web service with SERVER_URL property from koin.properties file
         startKoin(weatherApp + remoteDatasourceModule)
         dryRun()
     }
