@@ -16,6 +16,7 @@ import org.mockito.MockitoAnnotations
 class SearchPresenterTest : KoinTest {
 
     val presenter by inject<SearchContract.Presenter>()
+
     @Mock
     lateinit var view: SearchContract.View
 

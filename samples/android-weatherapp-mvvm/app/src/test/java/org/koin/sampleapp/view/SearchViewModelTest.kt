@@ -22,7 +22,7 @@ class SearchViewModelTest : KoinTest {
 
     val locationString = "Paris, france"
 
-    val mainViewModel: SearchViewModel by inject()
+    val searchViewModel: SearchViewModel by inject()
 
     @Mock lateinit var searchObserver: Observer<SearchEvent>
     @Mock lateinit var uiObserver: Observer<SearchUIModel>
@@ -43,10 +43,10 @@ class SearchViewModelTest : KoinTest {
 
     @Test
     fun testGetWeather() {
-        mainViewModel.searchEvent.observeForever(searchObserver)
-        mainViewModel.uiData.observeForever(uiObserver)
+        searchViewModel.searchEvent.observeForever(searchObserver)
+        searchViewModel.uiData.observeForever(uiObserver)
 
-        mainViewModel.searchWeather(locationString)
+        searchViewModel.searchWeather(locationString)
 
         verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         verify(searchObserver).onChanged(SearchEvent(isSuccess = true))

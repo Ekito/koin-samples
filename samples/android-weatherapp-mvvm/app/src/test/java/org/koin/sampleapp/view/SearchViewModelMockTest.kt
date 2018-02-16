@@ -22,7 +22,7 @@ class SearchViewModelMockTest {
 
     val locationString = "Paris, france"
 
-    lateinit var mainViewModel: SearchViewModel
+    lateinit var searchViewModel: SearchViewModel
 
     @Mock lateinit var repository: WeatherRepository
     @Mock lateinit var searchObserver: Observer<SearchEvent>
@@ -34,18 +34,18 @@ class SearchViewModelMockTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        mainViewModel = SearchViewModel(repository, TestSchedulerProvider())
+        searchViewModel = SearchViewModel(repository, TestSchedulerProvider())
     }
 
     @Test
     fun testGetWeather() {
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(Completable.complete())
 
-        mainViewModel.searchEvent.observeForever(searchObserver)
-        mainViewModel.uiData.observeForever(uiObserver)
+        searchViewModel.searchEvent.observeForever(searchObserver)
+        searchViewModel.uiData.observeForever(uiObserver)
 
 
-        mainViewModel.searchWeather(locationString)
+        searchViewModel.searchWeather(locationString)
 
         Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         Mockito.verify(searchObserver).onChanged(SearchEvent(isSuccess = true))
@@ -57,10 +57,10 @@ class SearchViewModelMockTest {
         val error = IllegalStateException("error !")
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(Completable.error(error))
 
-        mainViewModel.searchEvent.observeForever(searchObserver)
-        mainViewModel.uiData.observeForever(uiObserver)
+        searchViewModel.searchEvent.observeForever(searchObserver)
+        searchViewModel.uiData.observeForever(uiObserver)
 
-        mainViewModel.searchWeather(locationString)
+        searchViewModel.searchWeather(locationString)
 
         Mockito.verify(searchObserver).onChanged(SearchEvent(isLoading = true))
         Mockito.verify(searchObserver).onChanged(SearchEvent(error = error))
