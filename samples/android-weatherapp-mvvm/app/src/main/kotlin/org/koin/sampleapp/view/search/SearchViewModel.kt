@@ -3,7 +3,7 @@ package org.koin.sampleapp.view.search
 import android.arch.lifecycle.MutableLiveData
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.util.rx.with
+import org.koin.sampleapp.util.ext.with
 import org.koin.sampleapp.view.AbstractViewModel
 import org.koin.sampleapp.view.SingleLiveEvent
 
