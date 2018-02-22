@@ -15,7 +15,7 @@ import java.util.*
 
 
 /**
- * Weather View
+ * Search Weather View
  */
 class SearchActivity : AppCompatActivity() {
 

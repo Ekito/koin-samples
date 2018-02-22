@@ -17,7 +17,7 @@ import org.koin.sampleapp.view.detail.DetailActivity
 import java.util.*
 
 /**
- * Weather View
+ * Weather Result View
  */
 class ResultActivity : AppCompatActivity(), ResultContract.View {
 
@@ -55,8 +55,8 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         super.onPause()
     }
 
-    override fun onStop() {
-        super.onStop()
+    override fun onDestroy() {
+        super.onDestroy()
         releaseContext(Context.WEATHER_LIST)
     }
 

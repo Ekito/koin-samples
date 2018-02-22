@@ -3,7 +3,7 @@ package org.koin.sampleapp.view.result
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.util.rx.SchedulerProvider
-import org.koin.sampleapp.util.rx.with
+import org.koin.sampleapp.util.ext.with
 import org.koin.sampleapp.view.AbstractPresenter
 
 /**
