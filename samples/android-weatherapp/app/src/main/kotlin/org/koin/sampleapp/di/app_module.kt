@@ -26,7 +26,7 @@ val weatherModule = applicationContext {
         bean { ResultListPresenter(get(), get(), get()) as ResultListContract.Presenter }
     }
 
-    factory { DetailPresenter(get(), get()) as DetailContract.Presenter }
+    factory { params -> DetailPresenter(get(), get(), params["activity"]) as DetailContract.Presenter }
 
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
 }

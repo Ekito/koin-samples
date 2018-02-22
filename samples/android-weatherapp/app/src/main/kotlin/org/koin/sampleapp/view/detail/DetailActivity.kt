@@ -22,7 +22,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     private val now by argument<Date>(ARG_WEATHER_DATE)
     private val detailId by argument<String>(ARG_WEATHER_ITEM_ID)
 
-    override val presenter: DetailContract.Presenter by inject()
+    override val presenter: DetailContract.Presenter by inject(parameters = mapOf("activity" to this))
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,6 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onStart() {
         super.onStart()
-        presenter.view = this
         presenter.getDetail(detailId)
     }
 
