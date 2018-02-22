@@ -16,7 +16,7 @@ import org.koin.sampleapp.view.detail.DetailActivity
 import java.util.*
 
 /**
- * Weather View
+ * Weather Result View
  */
 class ResultActivity : AppCompatActivity() {
 

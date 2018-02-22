@@ -14,7 +14,7 @@ import org.koin.sampleapp.view.result.ResultActivity
 import java.util.*
 
 /**
- * Weather View
+ * Search Weather View
  */
 class SearchActivity : AppCompatActivity(), SearchContract.View {
 

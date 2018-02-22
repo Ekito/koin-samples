@@ -1,7 +1,8 @@
-package org.koin.sampleapp.util.rx
+package org.koin.sampleapp.util.ext
 
 import io.reactivex.Completable
 import io.reactivex.Single
+import org.koin.sampleapp.util.rx.SchedulerProvider
 
 
 /**
