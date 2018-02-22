@@ -1,3 +1,5 @@
+@file:Suppress("UNCHECKED_CAST")
+
 package org.koin.sampleapp.util.ext
 
 import android.os.Bundle
