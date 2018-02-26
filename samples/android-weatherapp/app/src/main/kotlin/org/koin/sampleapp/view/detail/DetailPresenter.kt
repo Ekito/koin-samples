@@ -5,7 +5,7 @@ import org.koin.sampleapp.util.ext.with
 import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.view.AbstractPresenter
 
-class DetailPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, override var view: DetailContract.View) : AbstractPresenter<DetailContract.View, DetailContract.Presenter>(), DetailContract.Presenter {
+class DetailPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider) : AbstractPresenter<DetailContract.View, DetailContract.Presenter>(), DetailContract.Presenter {
 
     override fun getDetail(id: String) {
         launch {

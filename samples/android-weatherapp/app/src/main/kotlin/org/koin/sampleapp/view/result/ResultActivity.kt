@@ -45,14 +45,14 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
                 .commit()
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onStart() {
+        super.onStart()
         presenter.view = this
     }
 
-    override fun onPause() {
+    override fun onStop() {
         presenter.stop()
-        super.onPause()
+        super.onStop()
     }
 
     override fun onDestroy() {

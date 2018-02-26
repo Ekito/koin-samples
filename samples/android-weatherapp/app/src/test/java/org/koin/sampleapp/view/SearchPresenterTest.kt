@@ -4,8 +4,6 @@ import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import org.koin.sampleapp.di.testApp
-import org.koin.sampleapp.repository.WeatherRepository
-import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.view.search.SearchContract
 import org.koin.sampleapp.view.search.SearchPresenter
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -18,9 +16,7 @@ import org.mockito.MockitoAnnotations
 
 class SearchPresenterTest : KoinTest {
 
-    val weatherRepository: WeatherRepository by inject()
-    val scheduler: SchedulerProvider by inject()
-    lateinit var presenter: SearchContract.Presenter
+    val presenter: SearchContract.Presenter by inject()
 
     @Mock
     lateinit var view: SearchContract.View
@@ -30,7 +26,7 @@ class SearchPresenterTest : KoinTest {
         MockitoAnnotations.initMocks(this)
         startKoin(testApp)
 
-        presenter = SearchPresenter(weatherRepository, scheduler, view)
+        presenter.view = view
     }
 
     @After

@@ -3,7 +3,6 @@ package org.koin.sampleapp.view.result
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import org.jetbrains.anko.startActivity
 import org.koin.android.architecture.ext.viewModel
 import org.koin.sampleapp.R
@@ -32,7 +31,6 @@ class ResultActivity : AppCompatActivity() {
         setContentView(R.layout.activity_weather)
 
         // Listen for weather id selected
-        Log.i(TAG, "model : $model")
         model.selectEvent.observe(this, android.arch.lifecycle.Observer {
             if (it != null) {
                 if (it.idSelected != null) {

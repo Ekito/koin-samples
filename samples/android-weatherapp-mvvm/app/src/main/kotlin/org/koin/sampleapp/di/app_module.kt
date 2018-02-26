@@ -13,12 +13,16 @@ import org.koin.sampleapp.view.search.SearchViewModel
 
 val weatherModule = applicationContext {
 
+    // ViewModel for Search View
     viewModel { SearchViewModel(get(), get()) }
 
+    // ViewModel for Result View
     viewModel { ResultViewModel(get(), get()) }
 
+    // ViewModel for Detail View
     viewModel { DetailViewModel(get(), get()) }
 
+    // Weather Data Repository
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
 }
 

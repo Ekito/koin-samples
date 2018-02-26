@@ -34,9 +34,14 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
 
     fun getSearchText() = searchEditText.text.trim().toString()
 
-    override fun onPause() {
+    override fun onStart() {
+        super.onStart()
+        presenter.view = this
+    }
+
+    override fun onStop() {
         presenter.stop()
-        super.onPause()
+        super.onStop()
     }
 
     override fun displayNormal() {

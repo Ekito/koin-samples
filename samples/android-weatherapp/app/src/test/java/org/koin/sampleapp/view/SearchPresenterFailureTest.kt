@@ -26,7 +26,9 @@ class SearchPresenterFailureTest : KoinTest {
     @Before
     fun before() {
         MockitoAnnotations.initMocks(this)
-        presenter = SearchPresenter(repository, TestSchedulerProvider(), view)
+
+        presenter = SearchPresenter(repository, TestSchedulerProvider())
+        presenter.view = view
     }
 
     @Test

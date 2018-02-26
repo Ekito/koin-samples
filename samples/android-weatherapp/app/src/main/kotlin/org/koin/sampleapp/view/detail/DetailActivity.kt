@@ -32,6 +32,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onStart() {
         super.onStart()
+        presenter.view = this
         presenter.getDetail(detailId)
     }
 

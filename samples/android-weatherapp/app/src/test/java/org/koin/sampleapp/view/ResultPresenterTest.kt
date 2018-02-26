@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations
 
 class ResultPresenterTest : KoinTest {
 
-    val presenter by inject<ResultListContract.Presenter>()
+    val presenter: ResultListContract.Presenter by inject()
 
     @Mock
     lateinit var view: ResultListContract.View
