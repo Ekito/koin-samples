@@ -54,7 +54,7 @@ class SearchViewModelMockTest {
 
     @Test
     fun testGetWeatherFailed() {
-        val error = IllegalStateException("error !")
+        val error = IllegalStateException("Got an error !")
         `when`(repository.searchWeather(ArgumentMatchers.anyString())).thenReturn(Completable.error(error))
 
         searchViewModel.searchEvent.observeForever(searchObserver)
