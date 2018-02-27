@@ -20,7 +20,7 @@ val weatherModule = applicationContext {
     viewModel { ResultViewModel(get(), get()) }
 
     // ViewModel for Detail View
-    viewModel { DetailViewModel(get(), get()) }
+    viewModel { params -> DetailViewModel(params["id"],get(), get()) }
 
     // Weather Data Repository
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }

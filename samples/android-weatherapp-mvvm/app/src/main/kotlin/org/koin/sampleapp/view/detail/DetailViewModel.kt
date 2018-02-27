@@ -10,7 +10,7 @@ import org.koin.sampleapp.view.AbstractViewModel
 /**
  * Weather Presenter
  */
-class DetailViewModel(private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
+class DetailViewModel(val id : String, private val weatherRepository: WeatherRepository, private val scheduler: SchedulerProvider) : AbstractViewModel() {
 
     val uiData = MutableLiveData<DailyForecastModel>()
 

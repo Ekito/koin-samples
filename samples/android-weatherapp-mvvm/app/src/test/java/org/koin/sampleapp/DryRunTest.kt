@@ -26,12 +26,12 @@ class DryRunTest : KoinTest {
     fun testRemoteConfiguration() {
         // Use remote web service with SERVER_URL property from koin.properties file
         startKoin(weatherApp + remoteDatasourceModule)
-        dryRun()
+        dryRun(defaultParameters = mapOf("id" to "ID"))
     }
 
     @Test
     fun testLocalConfiguration() {
         startKoin(testApp)
-        dryRun()
+        dryRun(defaultParameters = mapOf("id" to "ID"))
     }
 }
