@@ -1,0 +1,60 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+ext {
+    okhttp_version = '3.8.1'
+    retrofit_version = '2.2.0'
+    rxjava_version = '2.1.7'
+    androidArchitectureVersion = "1.1.0"
+    anko_version='0.10.4'
+}
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        applicationId "koin.sampleapp"
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        test.java.srcDirs += 'src/test/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+
+    // Koin
+    implementation "org.koin:koin-android-architecture:$koin_version"
+    testImplementation "org.koin:koin-test:$koin_version"
+    testImplementation "org.mockito:mockito-core:$mockito_version"
+
+    // Anko
+    compile "org.jetbrains.anko:anko-commons:$anko_version"
+
+    // ViewModel and LiveData
+    implementation "android.arch.lifecycle:extensions:$androidArchitectureVersion"
+    annotationProcessor "android.arch.lifecycle:compiler:$androidArchitectureVersion"
+    testImplementation "android.arch.core:core-testing:$androidArchitectureVersion"
+
+}
+repositories {
+    mavenCentral()
+}
