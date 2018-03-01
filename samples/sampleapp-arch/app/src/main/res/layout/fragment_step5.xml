@@ -18,7 +18,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.lifecycles.step5_solution.Fragment_step5">
+    tools:context="org.koin.sampleapp.di.step5.Fragment_step5">
 
     <SeekBar
         android:id="@+id/seekBar"

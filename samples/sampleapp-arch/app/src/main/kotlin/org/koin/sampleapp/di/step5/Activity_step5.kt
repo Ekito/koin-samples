@@ -19,11 +19,14 @@ package org.koin.sampleapp.di.step5
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.example.android.codelabs.lifecycle.R
+import org.koin.standalone.StandAloneContext.loadKoinModules
 
 class Activity_step5 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        loadKoinModules(module5)
 
         setContentView(R.layout.activity_step5)
     }
