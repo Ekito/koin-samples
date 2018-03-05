@@ -3,7 +3,7 @@ package org.koin.sampleapp.view
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
-import org.koin.sampleapp.di.Params.SEARCH_ACTIVITY
+import org.koin.sampleapp.di.Params.SEARCH_VIEW
 import org.koin.sampleapp.di.testApp
 import org.koin.sampleapp.view.search.SearchContract
 import org.koin.standalone.StandAloneContext.closeKoin
@@ -16,7 +16,7 @@ import org.mockito.Mockito.mock
 class SearchPresenterTest : KoinTest {
 
     val view: SearchContract.View by lazy { mock(SearchContract.View::class.java) }
-    val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_ACTIVITY to view) }
+    val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_VIEW to view) }
 
 
     @Before

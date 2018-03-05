@@ -2,9 +2,9 @@ package org.koin.sampleapp.di
 
 import org.koin.dsl.module.applicationContext
 import org.koin.sampleapp.di.Context.WEATHER_LIST
-import org.koin.sampleapp.di.Params.DETAIL_ACTIVITY
-import org.koin.sampleapp.di.Params.RESULT_ACTIVITY
-import org.koin.sampleapp.di.Params.SEARCH_ACTIVITY
+import org.koin.sampleapp.di.Params.DETAIL_VIEW
+import org.koin.sampleapp.di.Params.RESULT_VIEW
+import org.koin.sampleapp.di.Params.SEARCH_VIEW
 import org.koin.sampleapp.repository.WeatherRepository
 import org.koin.sampleapp.repository.WeatherRepositoryImpl
 import org.koin.sampleapp.util.rx.ApplicationSchedulerProvider
@@ -21,17 +21,17 @@ import org.koin.sampleapp.view.search.SearchPresenter
 val weatherModule = applicationContext {
 
     // Presenter for Search View
-    factory { params -> SearchPresenter(get(), get(), params[SEARCH_ACTIVITY]) as SearchContract.Presenter }
+    factory { params -> SearchPresenter(get(), get(), params[SEARCH_VIEW]) as SearchContract.Presenter }
 
     // Presenters for Result View
     // custom context to hold both fragment presenter instances
     context(WEATHER_LIST) {
         bean { ResultPresenter() as ResultContract.Presenter }
-        bean { params -> ResultListPresenter(get(), get(), get(), params[RESULT_ACTIVITY]) as ResultListContract.Presenter }
+        bean { params -> ResultListPresenter(get(), get(), get(), params[RESULT_VIEW]) as ResultListContract.Presenter }
     }
 
     // Presenter for Detail View
-    factory { params -> DetailPresenter(get(), get(), params[DETAIL_ACTIVITY]) as DetailContract.Presenter }
+    factory { params -> DetailPresenter(get(), get(), params[DETAIL_VIEW]) as DetailContract.Presenter }
 
     // Weather Data Repository
     bean { WeatherRepositoryImpl(get()) as WeatherRepository }
@@ -47,9 +47,9 @@ object Context {
 }
 
 object Params {
-    const val SEARCH_ACTIVITY = "SEARCH_ACTIVITY"
-    const val RESULT_ACTIVITY = "RESULT_ACTIVITY"
-    const val DETAIL_ACTIVITY = "DETAIL_ACTIVITY"
+    const val SEARCH_VIEW = "SEARCH_VIEW"
+    const val RESULT_VIEW = "RESULT_VIEW"
+    const val DETAIL_VIEW = "DETAIL_VIEW"
 }
 
 // Gather all app modules

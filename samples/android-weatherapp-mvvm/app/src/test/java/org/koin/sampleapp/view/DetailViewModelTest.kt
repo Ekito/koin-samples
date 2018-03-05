@@ -21,7 +21,7 @@ import org.mockito.MockitoAnnotations
 
 class DetailViewModelTest : KoinTest {
 
-    val viewModel: DetailViewModel by inject(parameters = mapOf("id" to "ID"))
+    val viewModel: DetailViewModel by inject { mapOf("id" to "ID") }
     val repository: WeatherRepository by inject()
 
     @Mock

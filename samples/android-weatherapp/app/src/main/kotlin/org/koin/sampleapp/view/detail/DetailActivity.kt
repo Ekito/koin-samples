@@ -5,7 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_weather_detail.*
 import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.Params.DETAIL_ACTIVITY
+import org.koin.sampleapp.di.Params.DETAIL_VIEW
 import org.koin.sampleapp.model.DailyForecastModel
 import org.koin.sampleapp.util.ext.argument
 import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
@@ -23,7 +23,7 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
     private val now by argument<Date>(ARG_WEATHER_DATE)
     private val detailId by argument<String>(ARG_WEATHER_ITEM_ID)
 
-    override val presenter: DetailContract.Presenter by inject { mapOf(DETAIL_ACTIVITY to this) }
+    override val presenter: DetailContract.Presenter by inject { mapOf(DETAIL_VIEW to this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

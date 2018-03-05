@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.startActivity
 import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.Params.SEARCH_ACTIVITY
+import org.koin.sampleapp.di.Params.SEARCH_VIEW
 import org.koin.sampleapp.view.Arguments.ARG_ADDRESS
 import org.koin.sampleapp.view.Arguments.ARG_WEATHER_DATE
 import org.koin.sampleapp.view.result.ResultActivity
@@ -20,7 +20,7 @@ import java.util.*
 class SearchActivity : AppCompatActivity(), SearchContract.View {
 
     // Presenter
-    override val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_ACTIVITY to this) }
+    override val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_VIEW to this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

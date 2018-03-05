@@ -17,6 +17,8 @@ class DryRunTest : KoinTest {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
+    val defaultParameters = mapOf("id" to "ID")
+
     @After
     fun after() {
         closeKoin()
@@ -26,12 +28,12 @@ class DryRunTest : KoinTest {
     fun testRemoteConfiguration() {
         // Use remote web service with SERVER_URL property from koin.properties file
         startKoin(weatherApp + remoteDatasourceModule)
-        dryRun(defaultParameters = mapOf("id" to "ID"))
+        dryRun { defaultParameters }
     }
 
     @Test
     fun testLocalConfiguration() {
         startKoin(testApp)
-        dryRun(defaultParameters = mapOf("id" to "ID"))
+        dryRun { defaultParameters }
     }
 }

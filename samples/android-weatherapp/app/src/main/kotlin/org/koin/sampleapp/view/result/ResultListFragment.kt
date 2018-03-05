@@ -10,7 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather_list.*
 import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
-import org.koin.sampleapp.di.Params.RESULT_ACTIVITY
+import org.koin.sampleapp.di.Params.RESULT_VIEW
 import org.koin.sampleapp.model.DailyForecastModel
 
 class ResultListFragment : Fragment(), ResultListContract.View {
@@ -19,7 +19,7 @@ class ResultListFragment : Fragment(), ResultListContract.View {
 
     val TAG = javaClass.simpleName
 
-    override val presenter by inject<ResultListContract.Presenter> { mapOf(RESULT_ACTIVITY to this) }
+    override val presenter by inject<ResultListContract.Presenter> { mapOf(RESULT_VIEW to this) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
