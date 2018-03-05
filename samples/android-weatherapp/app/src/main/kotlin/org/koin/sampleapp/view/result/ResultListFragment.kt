@@ -19,9 +19,13 @@ class ResultListFragment : Fragment(), ResultListContract.View {
 
     val TAG = javaClass.simpleName
 
-    override val presenter by inject<ResultListContract.Presenter>(parameters = mapOf(RESULT_ACTIVITY to this))
+    override val presenter by inject<ResultListContract.Presenter> { mapOf(RESULT_ACTIVITY to this) }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_weather_list, container, false)
     }
 

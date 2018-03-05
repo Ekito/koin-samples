@@ -31,18 +31,20 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         setContentView(R.layout.activity_weather)
 
         val weatherTitleFragment = ResultHeaderFragment()
-                .withArguments(ARG_WEATHER_DATE to date,
-                        ARG_ADDRESS to address)
+            .withArguments(
+                ARG_WEATHER_DATE to date,
+                ARG_ADDRESS to address
+            )
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.weather_title, weatherTitleFragment)
-                .commit()
+            .beginTransaction()
+            .replace(R.id.weather_title, weatherTitleFragment)
+            .commit()
 
         supportFragmentManager
-                .beginTransaction()
-                .replace(R.id.weather_list, ResultListFragment())
-                .commit()
+            .beginTransaction()
+            .replace(R.id.weather_list, ResultListFragment())
+            .commit()
     }
 
     override fun onStart() {
@@ -62,9 +64,10 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
 
     override fun onDetailSaved(id: String) {
         startActivity<DetailActivity>(
-                ARG_WEATHER_DATE to date,
-                ARG_ADDRESS to address,
-                ARG_WEATHER_ITEM_ID to id)
+            ARG_WEATHER_DATE to date,
+            ARG_ADDRESS to address,
+            ARG_WEATHER_ITEM_ID to id
+        )
     }
 
     override fun displayError(error: Throwable) {

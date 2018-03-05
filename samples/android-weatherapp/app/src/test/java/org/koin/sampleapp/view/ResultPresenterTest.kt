@@ -16,7 +16,7 @@ import org.mockito.Mockito.mock
 class ResultPresenterTest : KoinTest {
 
     val view: ResultListContract.View = mock(ResultListContract.View::class.java)
-    val presenter: ResultListContract.Presenter by inject(parameters = mapOf(RESULT_ACTIVITY to view))
+    val presenter: ResultListContract.Presenter by inject { mapOf(RESULT_ACTIVITY to view) }
 
     @Before
     fun before() {

@@ -16,7 +16,7 @@ import org.mockito.Mockito.mock
 class SearchPresenterTest : KoinTest {
 
     val view: SearchContract.View by lazy { mock(SearchContract.View::class.java) }
-    val presenter: SearchContract.Presenter by inject(parameters = mapOf(SEARCH_ACTIVITY to view))
+    val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_ACTIVITY to view) }
 
 
     @Before

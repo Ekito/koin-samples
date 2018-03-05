@@ -20,7 +20,7 @@ import java.util.*
 class SearchActivity : AppCompatActivity(), SearchContract.View {
 
     // Presenter
-    override val presenter: SearchContract.Presenter by inject(parameters = mapOf(SEARCH_ACTIVITY to this))
+    override val presenter: SearchContract.Presenter by inject { mapOf(SEARCH_ACTIVITY to this) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,8 +52,9 @@ class SearchActivity : AppCompatActivity(), SearchContract.View {
     override fun onWeatherSuccess() {
         // save address
         startActivity<ResultActivity>(
-                ARG_WEATHER_DATE to Date(),
-                ARG_ADDRESS to getSearchText())
+            ARG_WEATHER_DATE to Date(),
+            ARG_ADDRESS to getSearchText()
+        )
     }
 
     override fun onWeatherFailed(error: Throwable) {

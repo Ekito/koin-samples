@@ -19,7 +19,11 @@ import org.mockito.Mockito.mock
 
 class DryRunTest : KoinTest {
 
-    val params = mapOf(DETAIL_ACTIVITY to mock(DetailContract.View::class.java), SEARCH_ACTIVITY to mock(SearchContract.View::class.java), RESULT_ACTIVITY to mock(ResultListContract.View::class.java))
+    val params = mapOf(
+        DETAIL_ACTIVITY to mock(DetailContract.View::class.java),
+        SEARCH_ACTIVITY to mock(SearchContract.View::class.java),
+        RESULT_ACTIVITY to mock(ResultListContract.View::class.java)
+    )
 
     @After
     fun after() {
@@ -29,12 +33,12 @@ class DryRunTest : KoinTest {
     @Test
     fun testRemoteConfiguration() {
         startKoin(weatherApp + remoteDatasourceModule)
-        dryRun(defaultParameters = params)
+        dryRun { params }
     }
 
     @Test
     fun testLocalConfiguration() {
         startKoin(testApp)
-        dryRun(defaultParameters = params)
+        dryRun { params }
     }
 }
