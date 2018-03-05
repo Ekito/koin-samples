@@ -28,8 +28,7 @@ class SearchPresenterMockTest : KoinTest {
     fun before() {
         MockitoAnnotations.initMocks(this)
 
-        presenter = SearchPresenter(repository, TestSchedulerProvider())
-        presenter.view = view
+        presenter = SearchPresenter(repository, TestSchedulerProvider(),view)
     }
 
     @Test

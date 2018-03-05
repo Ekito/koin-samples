@@ -9,7 +9,7 @@ import org.koin.sampleapp.view.AbstractPresenter
 /**
  * Weather Presenter
  */
-class ResultListPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, val weatherResultPresenter: ResultContract.Presenter) : AbstractPresenter<ResultListContract.View, ResultListContract.Presenter>(), ResultListContract.Presenter {
+class ResultListPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, val weatherResultPresenter: ResultContract.Presenter, override var view: ResultListContract.View) : AbstractPresenter<ResultListContract.View, ResultListContract.Presenter>(), ResultListContract.Presenter {
 
     override fun getWeather() {
         launch {

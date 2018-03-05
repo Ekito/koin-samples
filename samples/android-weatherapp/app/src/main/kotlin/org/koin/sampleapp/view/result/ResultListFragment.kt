@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import kotlinx.android.synthetic.main.fragment_weather_list.*
 import org.koin.android.ext.android.inject
 import org.koin.sampleapp.R
+import org.koin.sampleapp.di.Params.RESULT_ACTIVITY
 import org.koin.sampleapp.model.DailyForecastModel
 
 class ResultListFragment : Fragment(), ResultListContract.View {
@@ -18,7 +19,7 @@ class ResultListFragment : Fragment(), ResultListContract.View {
 
     val TAG = javaClass.simpleName
 
-    override val presenter by inject<ResultListContract.Presenter>()
+    override val presenter by inject<ResultListContract.Presenter>(parameters = mapOf(RESULT_ACTIVITY to this))
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_weather_list, container, false)
@@ -32,17 +33,12 @@ class ResultListFragment : Fragment(), ResultListContract.View {
             presenter.selectWeatherDetail(weatherDetail)
         })
         weatherList.adapter = weatherResultAdapter
-    }
-
-    override fun onResume() {
-        super.onResume()
-        presenter.view = this
         presenter.getWeather()
     }
 
-    override fun onPause() {
+    override fun onDestroy() {
         presenter.stop()
-        super.onPause()
+        super.onDestroy()
     }
 
     override fun displayWeather(weatherList: List<DailyForecastModel>) {

@@ -50,7 +50,7 @@ class ResultViewModelTest : KoinTest {
         viewModel.uiData.observeForever(listObserver)
         viewModel.getWeatherList()
 
-        val value = viewModel.uiData.value ?: error("No value for view model")
+        val value = viewModel.uiData.value ?: error("No value for view myModel")
 
         Mockito.verify(listObserver).onChanged(ResultUIModel(value.list))
     }
@@ -64,7 +64,7 @@ class ResultViewModelTest : KoinTest {
 
         viewModel.getWeatherList()
 
-        val value = viewModel.uiData.value ?: error("No value for view model")
+        val value = viewModel.uiData.value ?: error("No value for view myModel")
         Mockito.verify(listObserver).onChanged(ResultUIModel(value.list))
 
         val detail = value.list.first()

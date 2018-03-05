@@ -5,7 +5,7 @@ import org.koin.sampleapp.util.ext.with
 import org.koin.sampleapp.util.rx.SchedulerProvider
 import org.koin.sampleapp.view.AbstractPresenter
 
-class SearchPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider) : AbstractPresenter<SearchContract.View, SearchContract.Presenter>(), SearchContract.Presenter {
+class SearchPresenter(val weatherRepository: WeatherRepository, val schedulerProvider: SchedulerProvider, override var view: SearchContract.View) : AbstractPresenter<SearchContract.View, SearchContract.Presenter>(), SearchContract.Presenter {
 
     override fun getWeather(address: String) {
         view.displayProgress()

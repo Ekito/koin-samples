@@ -28,7 +28,7 @@ class ResultListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.i(TAG, "model : $model")
+        Log.i(TAG, "myModel : $model")
 
         // Listen Weather list
         model.uiData.observe(this, android.arch.lifecycle.Observer<ResultUIModel> {

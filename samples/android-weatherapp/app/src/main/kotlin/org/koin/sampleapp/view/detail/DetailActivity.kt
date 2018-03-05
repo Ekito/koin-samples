@@ -32,13 +32,12 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
 
     override fun onStart() {
         super.onStart()
-        presenter.view = this
         presenter.getDetail(detailId)
     }
 
-    override fun onStop() {
+    override fun onDestroy() {
         presenter.stop()
-        super.onStop()
+        super.onDestroy()
     }
 
     override fun displayDetail(weather: DailyForecastModel) {

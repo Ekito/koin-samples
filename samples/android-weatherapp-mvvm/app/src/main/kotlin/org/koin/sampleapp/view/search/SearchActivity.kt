@@ -19,20 +19,26 @@ import java.util.*
  */
 class SearchActivity : AppCompatActivity() {
 
-    val model: SearchViewModel by viewModel()
+    val myModel: SearchViewModel by viewModel()
+
+    val s : String by lazy {
+        println()
+        "pouet" }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        println("onCreate ...")
+
         // Start uiData weather
         searchButton.setOnClickListener {
             displayProgress()
             val address = getSearchText()
-            model.searchWeather(address)
+            myModel.searchWeather(address)
         }
 
-        model.searchEvent.observe(this, android.arch.lifecycle.Observer { searchEvent ->
+        myModel.searchEvent.observe(this, android.arch.lifecycle.Observer { searchEvent ->
             if (searchEvent != null) {
                 if (searchEvent.isLoading) {
                     displayProgress()
@@ -46,7 +52,7 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
         })
-        model.uiData.observe(this, android.arch.lifecycle.Observer { uiData ->
+        myModel.uiData.observe(this, android.arch.lifecycle.Observer { uiData ->
             if (uiData != null) {
                 val searchText = uiData.searchText
                 if (searchText != null) {
