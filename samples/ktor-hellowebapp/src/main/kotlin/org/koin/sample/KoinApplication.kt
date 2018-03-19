@@ -43,5 +43,5 @@ object Properties {
  */
 val KoinModule = applicationContext {
     // Business Service binding definition
-    provide { BusinessServiceImpl() as BusinessService }
+    bean { BusinessServiceImpl() as BusinessService }
 }
