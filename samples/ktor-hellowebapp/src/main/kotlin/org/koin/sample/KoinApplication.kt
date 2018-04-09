@@ -14,7 +14,7 @@ import org.koin.standalone.StandAloneContext.startKoin
 
 fun main(args: Array<String>) {
     // Start Koin
-    startKoin(arrayListOf(KoinModule), properties = mapOf(BYE_MSG to "See you soon", MY_MODEL to Model("Initial value")))
+    startKoin(arrayListOf(KoinModule), extraProperties = mapOf(BYE_MSG to "See you soon", MY_MODEL to Model("Initial value")))
 
     embeddedServer(Netty, commandLineEnvironment(args)).start()
 }

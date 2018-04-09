@@ -20,8 +20,10 @@ class ApplicationJobRoutesTest : AutoCloseKoinTest() {
 
     @Before
     fun before() {
-        startKoin(listOf(KoinModule),
-                properties = mapOf(HELLO_MSG to "Bonjour", BYE_MSG to "Au revoir", MY_MODEL to Model("Test value")))
+        startKoin(
+            listOf(KoinModule),
+            extraProperties = mapOf(HELLO_MSG to "Bonjour", BYE_MSG to "Au revoir", MY_MODEL to Model("Test value"))
+        )
     }
 
     @Test

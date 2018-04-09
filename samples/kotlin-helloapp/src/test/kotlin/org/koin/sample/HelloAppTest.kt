@@ -17,7 +17,7 @@ class HelloAppTest : AutoCloseKoinTest() {
 
     @Before
     fun before() {
-        startKoin(listOf(HelloModule), properties = mapOf(WHO to testVal))
+        startKoin(listOf(HelloModule), extraProperties = mapOf(WHO to testVal))
     }
 
     @Test

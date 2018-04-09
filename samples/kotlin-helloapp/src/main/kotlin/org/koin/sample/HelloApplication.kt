@@ -43,6 +43,6 @@ object Property {
 }
 
 fun main(vararg args: String) {
-    startKoin(listOf(HelloModule), properties = mapOf(WHO to "Koin :)"))
+    startKoin(listOf(HelloModule), extraProperties = mapOf(WHO to "Koin :)"))
     HelloApplication()
 }

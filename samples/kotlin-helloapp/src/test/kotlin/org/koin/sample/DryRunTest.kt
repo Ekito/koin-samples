@@ -23,7 +23,7 @@ class DryRunTest : KoinTest {
 
     @Test
     fun dryRunTest() {
-        startKoin(listOf(HelloModule), properties = mapOf(WHO to "TEST"))
+        startKoin(listOf(HelloModule), extraProperties = mapOf(WHO to "TEST"))
         dryRun()
     }
 }
