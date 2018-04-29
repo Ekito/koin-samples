@@ -15,12 +15,8 @@ import org.koin.dsl.module.applicationContext
 import org.koin.ktor.ext.inject
 import org.koin.standalone.StandAloneContext.startKoin
 
-interface HelloRepository {
-    fun getHello(): String
-}
-
-class HelloRepositoryImpl : HelloRepository {
-    override fun getHello(): String = "Ktor & Koin"
+class HelloRepository {
+    fun getHello(): String = "Ktor & Koin"
 }
 
 interface HelloService {
@@ -32,10 +28,14 @@ class HelloServiceImpl(val helloRepository: HelloRepository) : HelloService {
 }
 
 fun Application.main() {
+    // Install Ktor features
     install(DefaultHeaders)
     install(CallLogging)
 
+    // Lazy inject HelloService
     val service: HelloService by inject()
+
+    // Routing section
     routing {
         get("/hello") {
             call.respondText(service.sayHello())
@@ -45,12 +45,12 @@ fun Application.main() {
 
 val helloAppModule = applicationContext {
     bean { HelloServiceImpl(get()) as HelloService }
-    bean { HelloRepositoryImpl() as HelloRepository }
+    bean { HelloRepository() }
 }
 
 fun main(args: Array<String>) {
     // Start Koin
-    startKoin(arrayListOf(helloAppModule))
+    startKoin(listOf(helloAppModule))
     // Start Ktor
     embeddedServer(Netty, commandLineEnvironment(args)).start()
 }
