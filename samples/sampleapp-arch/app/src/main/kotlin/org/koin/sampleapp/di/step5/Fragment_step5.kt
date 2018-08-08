@@ -26,7 +26,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
 import com.example.android.codelabs.lifecycle.R
-import org.koin.android.architecture.ext.viewModel
+import org.koin.android.architecture.ext.sharedViewModel
 
 /**
  * Shows a SeekBar that is synced with a value in a ViewModel.
@@ -35,7 +35,7 @@ class Fragment_step5 : Fragment() {
 
     private var mSeekBar: SeekBar? = null
 
-    val mSeekBarViewModel: SeekBarViewModel by viewModel()
+    val mSeekBarViewModel: SeekBarViewModel by sharedViewModel()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
